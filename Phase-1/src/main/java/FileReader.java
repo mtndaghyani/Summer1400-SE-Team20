@@ -12,6 +12,10 @@ public class FileReader {
     }
 
     public ArrayList<String> read() throws FileNotFoundException {
+        /*
+        * Read all files in the specified directory and
+        * returns an ArrayList of their contents.
+        * */
         File folder = new File(this.directory);
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> listOfContents = new ArrayList<String>();
