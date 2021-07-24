@@ -30,5 +30,4 @@ public class FileReader {
         return listOfContents;
 
     }
-
 }
