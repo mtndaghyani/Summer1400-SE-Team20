@@ -9,16 +9,18 @@ public class InvertedIndex {
     private FileReader fileReader;
     private StanfordCoreNLP coreNLP;
     private HashMap<String, HashSet<Integer>> dictionary;
+    private Stemmer stemmer;
 
     public InvertedIndex(String directoryPath) {
         this.fileReader = new FileReader(directoryPath);
         this.dictionary = new HashMap<>();
+        this.stemmer = new Stemmer();
         setUpPipeline();
         setUpDictionary();
     }
 
     public HashSet<Integer> searchWord (String word){
-        String token = this.coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase();
+        String token = stemmer.stem(this.coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase());
         if (dictionary.containsKey(token))
             return dictionary.get(token);
         return new HashSet<>();
@@ -30,8 +32,8 @@ public class InvertedIndex {
         String word;
         for (List<CoreLabel> tokensList : tokensLists) {
             for (CoreLabel coreLabel : tokensList) {
-                word = coreLabel.lemma().toLowerCase();
-                if (dictionary.containsKey(coreLabel.lemma().toLowerCase()))
+                word = stemmer.stem(coreLabel.lemma().toLowerCase());
+                if (dictionary.containsKey(word))
                         dictionary.get(word).add(counter);
                 else
                     dictionary.put(word, new HashSet<>(Arrays.asList(counter)));
