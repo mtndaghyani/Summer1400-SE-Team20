@@ -552,7 +552,6 @@ public class Stemmer implements Function<Word,Word> {
         i = 0;
     }
 
-
     /**
      * Stems <code>s</code> and returns stemmed <code>String</code>.
      */
