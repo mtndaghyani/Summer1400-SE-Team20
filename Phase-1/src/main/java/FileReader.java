@@ -19,11 +19,13 @@ public class FileReader {
         File folder = new File(this.directory);
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> listOfContents = new ArrayList<String>();
+        Scanner scanner;
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
-                Scanner scanner = new Scanner(file);
+                scanner = new Scanner(file);
                 scanner.useDelimiter("\\Z");
-                listOfContents.add(scanner.next());
+                if (scanner.hasNext())
+                    listOfContents.add(scanner.next());
             }
         } else
             System.err.println("Directory not found!");
