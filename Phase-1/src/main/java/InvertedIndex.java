@@ -2,18 +2,42 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class InvertedIndex {
 
     private FileReader fileReader;
     private StanfordCoreNLP coreNLP;
+    private HashMap<String, HashSet<Integer>> dictionary;
 
     public InvertedIndex(String directoryPath) {
         this.fileReader = new FileReader(directoryPath);
+        this.dictionary = new HashMap<>();
         setUpPipeline();
+        setUpDictionary();
+    }
+
+    public HashSet<Integer> searchWord (String word){
+        String token = this.coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase();
+        if (dictionary.containsKey(token))
+            return dictionary.get(token);
+        return new HashSet<>();
+    }
+
+    private void setUpDictionary() {
+        ArrayList<List<CoreLabel>> tokensLists = getTokens();
+        int counter = 1;
+        String word;
+        for (List<CoreLabel> tokensList : tokensLists) {
+            for (CoreLabel coreLabel : tokensList) {
+                word = coreLabel.lemma().toLowerCase();
+                if (dictionary.containsKey(coreLabel.lemma().toLowerCase()))
+                        dictionary.get(word).add(counter);
+                else
+                    dictionary.put(word, new HashSet<>(Arrays.asList(counter)));
+            }
+            counter += 1;
+        }
     }
 
     private void setUpPipeline() {
@@ -37,5 +61,7 @@ public class InvertedIndex {
         }
         return result;
     }
+
+
 
 }
