@@ -12,33 +12,27 @@ public class InvertedIndex {
     private StanfordCoreNLP coreNLP;
     private HashMap<String, HashSet<Integer>> dictionary;
     private Stemmer stemmer;
-    private ArrayList<String> simpleWords;
-    private ArrayList<String> plusWords;
-    private ArrayList<String> minusWords;
 
     public InvertedIndex(String directoryPath) {
         this.fileReader = new FileReader(directoryPath);
         this.dictionary = new HashMap<>();
         this.stemmer = new Stemmer();
-        this.simpleWords = new ArrayList<>();
-        this.plusWords = new ArrayList<>();
-        this.minusWords = new ArrayList<>();
-
         setUpPipeline();
         setUpDictionary();
     }
 
-    public HashSet<Integer> searchWord (String word){
-        String token = stemmer.stem(this.coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase());
-        if (dictionary.containsKey(token))
-            return dictionary.get(token);
-        return new HashSet<>();
+    public HashSet<Integer> search(String statement) {
+        return findDocuments(statement);
     }
 
-    private void splitWords(String statement){
+    private HashSet<Integer> findDocuments(String statement) {
+        ArrayList<String> simpleWords = new ArrayList<>();
+        ArrayList<String> minusWords = new ArrayList<>();
+        ArrayList<String> plusWords = new ArrayList<>();
+
         Pattern pattern = Pattern.compile("([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)");
         Matcher matcher = pattern.matcher(statement);
-        while (matcher.find()){
+        while (matcher.find()) {
             String word = matcher.group(2);
             if (word.startsWith("+"))
                 plusWords.add(stemmer.stem(coreNLP.processToCoreDocument(word.substring(1)).tokens().get(0).lemma().toLowerCase()));
@@ -47,11 +41,7 @@ public class InvertedIndex {
             else
                 simpleWords.add(stemmer.stem(coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase()));
         }
-    }
-
-    private HashSet<Integer> findDocuments(){
-        //Search words in the dictionary and returns the final hashset of documents.
-        return null;
+        return advanced_search(simpleWords, plusWords, minusWords);
     }
 
     private void setUpDictionary() {
@@ -62,7 +52,7 @@ public class InvertedIndex {
             for (CoreLabel coreLabel : tokensList) {
                 word = stemmer.stem(coreLabel.lemma().toLowerCase());
                 if (dictionary.containsKey(word))
-                        dictionary.get(word).add(counter);
+                    dictionary.get(word).add(counter);
                 else
                     dictionary.put(word, new HashSet<>(Collections.singletonList(counter)));
             }
@@ -78,8 +68,8 @@ public class InvertedIndex {
 
     private ArrayList<List<CoreLabel>> getTokens() {
         /*
-        * Read contents of files and returns an ArrayList of tokens of each document.
-        * */
+         * Read contents of files and returns an ArrayList of tokens of each document.
+         * */
         ArrayList<List<CoreLabel>> result = new ArrayList<>();
         try {
             ArrayList<String> contents = this.fileReader.read();
@@ -93,36 +83,30 @@ public class InvertedIndex {
     }
 
 
-    public HashSet<Integer> advanced_search(String statement){
-        splitWords(statement);
-        return advanced_search(simpleWords, plusWords, minusWords);
+    private HashSet<Integer> advanced_search(ArrayList<String> should_contain, ArrayList<String> at_least_one, ArrayList<String> should_remove) {
+        HashSet<Integer> result = new HashSet<>();
+        for (String s : at_least_one) {
+            if (!dictionary.containsKey(s))
+                continue;
+            result.addAll(dictionary.get(s));
+        }
+
+        for (String s : should_contain) {
+            if (!dictionary.containsKey(s))
+                return new HashSet<>();
+            if (result.isEmpty() && at_least_one.isEmpty())
+                result = new HashSet<>(dictionary.get(s));
+            else
+                result.retainAll(dictionary.get(s));
+        }
+
+        for (String s : should_remove) {
+            if (!dictionary.containsKey(s))
+                continue;
+            result.removeAll(dictionary.get(s));
+        }
+
+        return result;
     }
-
-
-	private HashSet<Integer> advanced_search(ArrayList<String> should_contain, ArrayList<String> at_least_one, ArrayList<String> should_remove){
-		HashSet<Integer> result = new HashSet<>();
-		for(String s:at_least_one){
-			if(!dictionary.containsKey(s))
-				continue;
-			result.addAll(dictionary.get(s));
-		}
-
-		for(String s:should_contain){
-			if(!dictionary.containsKey(s))
-				return new HashSet<>();
-			if(result.isEmpty() && at_least_one.isEmpty())
-			    result = new HashSet<>(dictionary.get(s));
-			else
-			    result.retainAll(dictionary.get(s));
-		}
-
-		for(String s:should_remove){
-			if(!dictionary.containsKey(s))
-				continue;
-			result.removeAll(dictionary.get(s));
-		}
-
-		return result;
-	}
 
 }
