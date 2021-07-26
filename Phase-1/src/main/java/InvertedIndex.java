@@ -10,6 +10,9 @@ public class InvertedIndex {
     private StanfordCoreNLP coreNLP;
     private HashMap<String, HashSet<Integer>> dictionary;
     private Stemmer stemmer;
+    private ArrayList<String> simpleWords;
+    private ArrayList<String> plusWords;
+    private ArrayList<String> minusWords;
 
     public InvertedIndex(String directoryPath) {
         this.fileReader = new FileReader(directoryPath);
@@ -24,6 +27,16 @@ public class InvertedIndex {
         if (dictionary.containsKey(token))
             return dictionary.get(token);
         return new HashSet<>();
+    }
+
+    private void splitWords(String statement){
+        // Split simple, plus and minus words and add them to
+        //this.simpleWords, this.plusWords and this.minusWords.
+    }
+
+    private HashSet<Integer> findDocuments(){
+        //Search words in the dictionary and returns the final hashset of documents.
+        return null;
     }
 
     private void setUpDictionary() {
