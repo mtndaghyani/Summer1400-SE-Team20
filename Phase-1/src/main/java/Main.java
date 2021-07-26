@@ -8,11 +8,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Indexing started...");
         InvertedIndex invertedIndex = new InvertedIndex(DATASET_PATH);
+        SearchEngine engine = new SearchEngine(invertedIndex);
         System.out.println("DONE");
         String toSearch;
         System.out.println("Enter something:");
         while (!finished(toSearch = scanner.nextLine())) {
-            for (Integer id : invertedIndex.search(toSearch)) {
+            for (Integer id : engine.search(toSearch)) {
                 System.out.println("doc" + id.toString());
             }
             System.out.println("Enter something:");

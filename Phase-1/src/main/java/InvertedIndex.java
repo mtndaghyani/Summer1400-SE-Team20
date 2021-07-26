@@ -3,8 +3,6 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class InvertedIndex {
 
@@ -21,28 +19,6 @@ public class InvertedIndex {
         setUpDictionary();
     }
 
-    public HashSet<Integer> search(String statement) {
-        return findDocuments(statement);
-    }
-
-    private HashSet<Integer> findDocuments(String statement) {
-        ArrayList<String> simpleWords = new ArrayList<>();
-        ArrayList<String> minusWords = new ArrayList<>();
-        ArrayList<String> plusWords = new ArrayList<>();
-
-        Pattern pattern = Pattern.compile("([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)");
-        Matcher matcher = pattern.matcher(statement);
-        while (matcher.find()) {
-            String word = matcher.group(2);
-            if (word.startsWith("+"))
-                plusWords.add(stemmer.stem(coreNLP.processToCoreDocument(word.substring(1)).tokens().get(0).lemma().toLowerCase()));
-            else if (word.startsWith("-"))
-                minusWords.add(stemmer.stem(coreNLP.processToCoreDocument(word.substring(1)).tokens().get(0).lemma().toLowerCase()));
-            else
-                simpleWords.add(stemmer.stem(coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase()));
-        }
-        return advanced_search(simpleWords, plusWords, minusWords);
-    }
 
     private void setUpDictionary() {
         ArrayList<List<CoreLabel>> tokensLists = getTokens();
@@ -82,31 +58,15 @@ public class InvertedIndex {
         return result;
     }
 
-
-    private HashSet<Integer> advanced_search(ArrayList<String> should_contain, ArrayList<String> at_least_one, ArrayList<String> should_remove) {
-        HashSet<Integer> result = new HashSet<>();
-        for (String s : at_least_one) {
-            if (!dictionary.containsKey(s))
-                continue;
-            result.addAll(dictionary.get(s));
-        }
-
-        for (String s : should_contain) {
-            if (!dictionary.containsKey(s))
-                return new HashSet<>();
-            if (result.isEmpty() && at_least_one.isEmpty())
-                result = new HashSet<>(dictionary.get(s));
-            else
-                result.retainAll(dictionary.get(s));
-        }
-
-        for (String s : should_remove) {
-            if (!dictionary.containsKey(s))
-                continue;
-            result.removeAll(dictionary.get(s));
-        }
-
-        return result;
+    public HashMap<String, HashSet<Integer>> getDictionary() {
+        return dictionary;
     }
+
+    public String stem(String word){
+        return stemmer.stem(coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase());
+    }
+
+
+
 
 }
