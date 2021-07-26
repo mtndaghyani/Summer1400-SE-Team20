@@ -77,6 +77,28 @@ public class InvertedIndex {
         return result;
     }
 
-
+	
+	private HashSet<Integer> advanced_search(ArrayList<String> should_contain, ArrayList<String> at_least_one, ArrayList<String> should_remove){
+		HashSet<Integer> result = new HashSet<>();
+		for(String s:at_least_one){
+			if(!dictionary.containsKey(s))
+				continue;
+			result.addAll(dictionary.get(s));
+		}
+	
+		for(String s:should_contain){
+			if(!dictionary.containsKey(s))
+				return new HashSet<>();
+			result.retainAll(dictionary.get(s));
+		}
+		
+		for(String s:should_contain){
+			if(!dictionary.containsKey(s))
+				continue;
+			result.removeAll(dictionary.get(s));
+		}
+		
+		return result;
+	}
 
 }
