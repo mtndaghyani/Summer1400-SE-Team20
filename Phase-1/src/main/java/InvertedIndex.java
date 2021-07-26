@@ -3,6 +3,8 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InvertedIndex {
 
@@ -18,6 +20,10 @@ public class InvertedIndex {
         this.fileReader = new FileReader(directoryPath);
         this.dictionary = new HashMap<>();
         this.stemmer = new Stemmer();
+        this.simpleWords = new ArrayList<>();
+        this.plusWords = new ArrayList<>();
+        this.minusWords = new ArrayList<>();
+
         setUpPipeline();
         setUpDictionary();
     }
@@ -30,8 +36,17 @@ public class InvertedIndex {
     }
 
     private void splitWords(String statement){
-        // Split simple, plus and minus words and add them to
-        //this.simpleWords, this.plusWords and this.minusWords.
+        Pattern pattern = Pattern.compile("([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)");
+        Matcher matcher = pattern.matcher(statement);
+        while (matcher.find()){
+            String word = matcher.group(2);
+            if (word.startsWith("+"))
+                plusWords.add(stemmer.stem(coreNLP.processToCoreDocument(word.substring(1)).tokens().get(0).lemma().toLowerCase()));
+            else if (word.startsWith("-"))
+                minusWords.add(stemmer.stem(coreNLP.processToCoreDocument(word.substring(1)).tokens().get(0).lemma().toLowerCase()));
+            else
+                simpleWords.add(stemmer.stem(coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase()));
+        }
     }
 
     private HashSet<Integer> findDocuments(){
@@ -77,7 +92,7 @@ public class InvertedIndex {
         return result;
     }
 
-	
+
 	private HashSet<Integer> advanced_search(ArrayList<String> should_contain, ArrayList<String> at_least_one, ArrayList<String> should_remove){
 		HashSet<Integer> result = new HashSet<>();
 		for(String s:at_least_one){
@@ -85,20 +100,27 @@ public class InvertedIndex {
 				continue;
 			result.addAll(dictionary.get(s));
 		}
-	
+
 		for(String s:should_contain){
 			if(!dictionary.containsKey(s))
 				return new HashSet<>();
 			result.retainAll(dictionary.get(s));
 		}
-		
+
 		for(String s:should_contain){
 			if(!dictionary.containsKey(s))
 				continue;
 			result.removeAll(dictionary.get(s));
 		}
-		
+
 		return result;
 	}
+
+
+    public static void main(String[] args) {
+        String s = "get help +illness -cough";
+        InvertedIndex invertedIndex = new InvertedIndex("src/main/java/docs");
+        invertedIndex.splitWords(s);
+    }
 
 }
