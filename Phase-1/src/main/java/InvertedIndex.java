@@ -64,7 +64,7 @@ public class InvertedIndex {
                 if (dictionary.containsKey(word))
                         dictionary.get(word).add(counter);
                 else
-                    dictionary.put(word, new HashSet<>(Arrays.asList(counter)));
+                    dictionary.put(word, new HashSet<>(Collections.singletonList(counter)));
             }
             counter += 1;
         }
