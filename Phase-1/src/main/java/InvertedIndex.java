@@ -93,7 +93,7 @@ public class InvertedIndex {
     }
 
 
-    private HashSet<Integer> advanced_search(String statement){
+    public HashSet<Integer> advanced_search(String statement){
         splitWords(statement);
         return advanced_search(simpleWords, plusWords, minusWords);
     }
@@ -110,10 +110,13 @@ public class InvertedIndex {
 		for(String s:should_contain){
 			if(!dictionary.containsKey(s))
 				return new HashSet<>();
-			result.retainAll(dictionary.get(s));
+			if(result.isEmpty() && at_least_one.isEmpty())
+			    result = new HashSet<>(dictionary.get(s));
+			else
+			    result.retainAll(dictionary.get(s));
 		}
 
-		for(String s:should_contain){
+		for(String s:should_remove){
 			if(!dictionary.containsKey(s))
 				continue;
 			result.removeAll(dictionary.get(s));
@@ -121,14 +124,5 @@ public class InvertedIndex {
 
 		return result;
 	}
-
-
-    public static void main(String[] args) {
-        String s = "get help +illness -cough";
-        InvertedIndex invertedIndex = new InvertedIndex("src/main/java/docs");
-        invertedIndex.splitWords(s);
-        HashSet<Integer> doc_IDs = invertedIndex.advanced_search(s);
-        System.out.println(Arrays.toString(doc_IDs.toArray()));
-    }
 
 }
