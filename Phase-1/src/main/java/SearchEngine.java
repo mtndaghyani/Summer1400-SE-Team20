@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class SearchEngine {
 
+    public static final String SEARCH_WORD_REGEX = "([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)";
     private InvertedIndex invertedIndex;
 
 
@@ -14,7 +15,7 @@ public class SearchEngine {
     public HashSet<Integer> search(String statement) {
         SearchFields fields = new SearchFields();
 
-        Pattern pattern = Pattern.compile("([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)");
+        Pattern pattern = Pattern.compile(SEARCH_WORD_REGEX);
         Matcher matcher = pattern.matcher(statement);
         while (matcher.find()) {
             String word = matcher.group(2);
