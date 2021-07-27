@@ -3,7 +3,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SearchEngine {
-    
+
     private InvertedIndex invertedIndex;
 
 
@@ -12,7 +12,20 @@ public class SearchEngine {
     }
 
     public HashSet<Integer> search(String statement) {
-        return findDocuments(statement);
+        SearchFields fields = new SearchFields();
+
+        Pattern pattern = Pattern.compile("([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)");
+        Matcher matcher = pattern.matcher(statement);
+        while (matcher.find()) {
+            String word = matcher.group(2);
+            if (word.startsWith("+"))
+                fields.addPlusWord(invertedIndex.stem(word.substring(1)));
+            else if (word.startsWith("-"))
+                fields.addMinusWord(invertedIndex.stem(word.substring(1)));
+            else
+                fields.addSimpleWord(invertedIndex.stem(word));
+        }
+        return advancedSearch(fields);
     }
 
     private HashSet<Integer> advancedSearch(SearchFields fields) {
@@ -52,23 +65,4 @@ public class SearchEngine {
                 result.retainAll(invertedIndex.getDictionary().get(s));
         }
     }
-
-    private HashSet<Integer> findDocuments(String statement) {
-        SearchFields fields = new SearchFields();
-
-        Pattern pattern = Pattern.compile("([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)");
-        Matcher matcher = pattern.matcher(statement);
-        while (matcher.find()) {
-            String word = matcher.group(2);
-            if (word.startsWith("+"))
-                fields.addPlusWord(invertedIndex.stem(word.substring(1)));
-            else if (word.startsWith("-"))
-                fields.addMinusWord(invertedIndex.stem(word.substring(1)));
-            else
-                fields.addSimpleWord(invertedIndex.stem(word));
-        }
-        return advancedSearch(fields);
-    }
-
-
 }

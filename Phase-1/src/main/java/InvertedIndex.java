@@ -15,7 +15,7 @@ public class InvertedIndex {
         this.fileReader = new FileReader(directoryPath);
         this.dictionary = new HashMap<>();
         this.stemmer = new Stemmer();
-        setUpPipeline();
+        setUpCoreNLP();
         setUpDictionary();
     }
 
@@ -36,7 +36,7 @@ public class InvertedIndex {
         }
     }
 
-    private void setUpPipeline() {
+    private void setUpCoreNLP() {
         Properties properties = new Properties();
         properties.setProperty("annotators", "tokenize,ssplit, pos, lemma");
         this.coreNLP = new StanfordCoreNLP(properties);
@@ -62,11 +62,10 @@ public class InvertedIndex {
         return dictionary;
     }
 
-    public String stem(String word){
-        return stemmer.stem(coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase());
+    public String stem(String word) {
+        String lemmatized = coreNLP.processToCoreDocument(word).tokens().get(0).lemma().toLowerCase();
+        return stemmer.stem(lemmatized);
     }
-
-
 
 
 }
