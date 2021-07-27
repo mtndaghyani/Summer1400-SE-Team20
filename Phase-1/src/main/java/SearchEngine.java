@@ -39,23 +39,21 @@ public class SearchEngine {
     }
 
     private void handleMinusWords(SearchFields fields, HashSet<Integer> result) {
-        for (String s : fields.getMinusWords()) {
-            if (!invertedIndex.getDictionary().containsKey(s))
-                continue;
-            result.removeAll(invertedIndex.getDictionary().get(s));
-        }
+        fields.getMinusWords().forEach(s -> {
+            if (invertedIndex.getDictionary().containsKey(s))
+                result.removeAll(invertedIndex.getDictionary().get(s));
+        });
     }
 
     private void handlePlusWords(SearchFields fields, HashSet<Integer> result) {
-        for (String s : fields.getPlusWords()) {
-            if (!invertedIndex.getDictionary().containsKey(s))
-                continue;
-            result.addAll(invertedIndex.getDictionary().get(s));
-        }
+        fields.getPlusWords().forEach(s -> {
+            if (invertedIndex.getDictionary().containsKey(s))
+                result.addAll(invertedIndex.getDictionary().get(s));
+        });
     }
 
     private void handleSimpleWords(SearchFields fields, HashSet<Integer> result) {
-        for (String s : fields.getSimpleWords()) {
+        fields.getSimpleWords().forEach(s -> {
             if (!invertedIndex.getDictionary().containsKey(s)) {
                 result.clear();
                 return;
@@ -64,6 +62,6 @@ public class SearchEngine {
                 result.addAll(invertedIndex.getDictionary().get(s));
             else
                 result.retainAll(invertedIndex.getDictionary().get(s));
-        }
+        });
     }
 }
