@@ -1,3 +1,6 @@
 */.idea/
 */target/
+*/src/main/java/docs/
+*/src/main/java/docs1/
+*/src/main/java/EnglishData/
 *.iml
