@@ -47,15 +47,11 @@ public class InvertedIndex {
          * Read contents of files and returns an ArrayList of tokens of each document.
          * */
         ArrayList<List<CoreLabel>> result = new ArrayList<>();
-        try {
-            ArrayList<String> contents = this.fileReader.read();
-            System.out.println(contents);
-            for (String content : contents)
-                result.add(this.coreNLP.processToCoreDocument(content).tokens());
 
-        } catch (Exception e) {
-            System.err.println("Tokenization failed");
-        }
+        ArrayList<String> contents = this.fileReader.read();
+        System.out.println(contents);
+        for (String content : contents)
+            result.add(this.coreNLP.processToCoreDocument(content).tokens());
         return result;
     }
 
