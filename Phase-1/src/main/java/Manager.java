@@ -29,7 +29,7 @@ public class Manager {
 
     private void makeInvertedIndex(String path) {
         System.out.println("Indexing started...");
-        invertedIndex = new InvertedIndex(path);
+        invertedIndex = new InvertedIndex(new Stemmer(), new FileReader(path));
         System.out.println("DONE");
     }
 
