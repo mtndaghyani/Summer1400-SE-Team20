@@ -6,8 +6,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -48,10 +46,7 @@ public class ManagerTest {
     public void testRun_WHEN_firstInputIsDollar_EXPECT_emptyOutput(){
         Manager runManager = mock(Manager.class);
         when(runManager.finished(any(String.class))).thenReturn(true);
-        // when(runManager.doSearch(any(String.class))).thenReturn(new HashSet<>());
         doCallRealMethod().when(runManager).run();
-        // when(runManager.run()).thenCallRealMethod();
-        // ByteArrayInputStream in = new ByteArrayInputStream("document\nvideo\n".getBytes());
         ByteArrayInputStream in = new ByteArrayInputStream("$\n".getBytes());
         System.setIn(in);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -70,8 +65,6 @@ public class ManagerTest {
         when(runManager.doSearch(any(String.class))).thenReturn(new HashSet<>(Arrays.asList(1, 3)));
         doCallRealMethod().when(runManager).printElements(ArgumentMatchers.<Iterable<Integer>>any());
         doCallRealMethod().when(runManager).run();
-        // when(runManager.run()).thenCallRealMethod();
-        // ByteArrayInputStream in = new ByteArrayInputStream("document\nvideo\n".getBytes());
         ByteArrayInputStream in = new ByteArrayInputStream("Something\r\n$\r\n".getBytes());
         System.setIn(in);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
