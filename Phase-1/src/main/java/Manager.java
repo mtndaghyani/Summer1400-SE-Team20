@@ -23,27 +23,27 @@ public class Manager {
         }
     }
 
-    private void makeSearchEngine() {
+    void makeSearchEngine() {
         engine = new SearchEngine(invertedIndex);
     }
 
-    private void makeInvertedIndex(String path) {
+    void makeInvertedIndex(String path) {
         System.out.println("Indexing started...");
-        invertedIndex = new InvertedIndex(path);
+        invertedIndex = new InvertedIndex(new Stemmer(), new FileReader(path));
         System.out.println("DONE");
     }
 
-    private HashSet<Integer> doSearch(String toSearch) {
+    HashSet<Integer> doSearch(String toSearch) {
         return engine.search(toSearch);
     }
 
-    private void printElements(HashSet<Integer> elements) {
+    void printElements(Iterable<Integer> elements) {
         for (Integer id : elements) {
             System.out.println("element" + id.toString());
         }
     }
 
-    private boolean finished(String toSearch) {
+    boolean finished(String toSearch) {
         return toSearch.equalsIgnoreCase(END_DELIMITER);
     }
 

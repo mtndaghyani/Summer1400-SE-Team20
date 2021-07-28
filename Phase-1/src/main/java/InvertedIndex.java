@@ -6,21 +6,21 @@ import java.util.*;
 
 public class InvertedIndex {
 
-    private FileReader fileReader;
-    private StanfordCoreNLP coreNLP;
-    private HashMap<String, HashSet<Integer>> dictionary;
-    private Stemmer stemmer;
+    Reader fileReader;
+    StanfordCoreNLP coreNLP;
+    HashMap<String, HashSet<Integer>> dictionary;
+    Stemmer stemmer;
 
-    public InvertedIndex(String directoryPath) {
-        this.fileReader = new FileReader(directoryPath);
+    public InvertedIndex(Stemmer stemmer, Reader reader) {
+        this.fileReader =  reader;
+        this.stemmer = stemmer;
         this.dictionary = new HashMap<>();
-        this.stemmer = new Stemmer();
         setUpCoreNLP();
         setUpDictionary();
     }
 
 
-    private void setUpDictionary() {
+     void setUpDictionary() {
         ArrayList<List<CoreLabel>> tokensLists = getTokens();
         int counter = 1;
         String word;
@@ -36,25 +36,21 @@ public class InvertedIndex {
         }
     }
 
-    private void setUpCoreNLP() {
+     void setUpCoreNLP() {
         Properties properties = new Properties();
         properties.setProperty("annotators", "tokenize,ssplit, pos, lemma");
         this.coreNLP = new StanfordCoreNLP(properties);
     }
 
-    private ArrayList<List<CoreLabel>> getTokens() {
+     ArrayList<List<CoreLabel>> getTokens() {
         /*
          * Read contents of files and returns an ArrayList of tokens of each document.
          * */
         ArrayList<List<CoreLabel>> result = new ArrayList<>();
-        try {
-            ArrayList<String> contents = this.fileReader.read();
-            for (String content : contents)
-                result.add(this.coreNLP.processToCoreDocument(content).tokens());
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Tokenization failed");
-        }
+        ArrayList<String> contents = this.fileReader.read();
+        for (String content : contents)
+            result.add(this.coreNLP.processToCoreDocument(content).tokens());
         return result;
     }
 
