@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ManagerTest {
     private final static String DATASET_PATH = "src/main/java/docs1";
-    private Manager manager = new Manager(DATASET_PATH);
+    private final Manager manager = new Manager(DATASET_PATH);
 
     @Test
     public void testFinished_WHEN_dollarSign_EXPECT_true(){
@@ -55,7 +55,6 @@ public class ManagerTest {
         runManager.run();
         assertEquals("Enter something:\n", outContent.toString().replaceAll("\r", ""));
     }
-
 
     @Test
     public void testRun_WHEN_secondInputIsDollar_EXPECT_oneTimeOutput(){
