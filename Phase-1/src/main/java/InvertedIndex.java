@@ -6,10 +6,10 @@ import java.util.*;
 
 public class InvertedIndex {
 
-    private Reader fileReader;
-    private StanfordCoreNLP coreNLP;
-    private HashMap<String, HashSet<Integer>> dictionary;
-    private Stemmer stemmer;
+    Reader fileReader;
+    StanfordCoreNLP coreNLP;
+    HashMap<String, HashSet<Integer>> dictionary;
+    Stemmer stemmer;
 
     public InvertedIndex(Stemmer stemmer, Reader reader) {
         this.fileReader =  reader;
@@ -49,7 +49,6 @@ public class InvertedIndex {
         ArrayList<List<CoreLabel>> result = new ArrayList<>();
 
         ArrayList<String> contents = this.fileReader.read();
-        System.out.println(contents);
         for (String content : contents)
             result.add(this.coreNLP.processToCoreDocument(content).tokens());
         return result;
