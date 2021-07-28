@@ -8,7 +8,7 @@ import java.util.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestInvertedIndex {
+public class InvertedIndexTests {
 
     FileReader fileReaderMock;
     InvertedIndex invertedIndex;
