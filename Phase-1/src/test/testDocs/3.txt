@@ -1,1 +1,1 @@
-Themes and styles also help keep your document coordinated. When you click Design and choose a new Theme, the pictures, charts, and SmartArt graphics change to match your new theme. When you apply styles, your headings change to match the new theme.
+Themes and styles also help keep your document coordinated.
