@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileReader {
+public class FileReader implements Reader{
 
     private String directory;
 
