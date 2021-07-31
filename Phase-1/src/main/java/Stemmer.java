@@ -1,12 +1,6 @@
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Iterator;
+import edu.stanford.nlp.ling.Word;
 
 import java.util.function.Function;
-
-
-import edu.stanford.nlp.ling.Word;
 
 /**
  * Stemmer, implementing the Porter Stemming Algorithm
