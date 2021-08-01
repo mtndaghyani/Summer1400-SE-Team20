@@ -39,29 +39,31 @@ public class SearchEngine {
     }
 
     private void handleMinusWords(SearchFields fields, HashSet<Integer> result) {
-        fields.getMinusWords().forEach(s -> {
+        for(String s : fields.getMinusWords()){
             if (invertedIndex.getDictionary().containsKey(s))
                 result.removeAll(invertedIndex.getDictionary().get(s));
-        });
+        }
     }
 
     private void handlePlusWords(SearchFields fields, HashSet<Integer> result) {
-        fields.getPlusWords().forEach(s -> {
+        if (result.isEmpty() && fields.getPlusWords().isEmpty()){
+            for(String s : fields.getSimpleWords())
+                result.addAll(invertedIndex.getDictionary().get(s));
+            return;
+        }
+        for(String s : fields.getPlusWords()){
             if (invertedIndex.getDictionary().containsKey(s))
                 result.addAll(invertedIndex.getDictionary().get(s));
-        });
+        }
     }
 
     private void handleSimpleWords(SearchFields fields, HashSet<Integer> result) {
-        fields.getSimpleWords().forEach(s -> {
+        for(String s : fields.getSimpleWords()){
             if (!invertedIndex.getDictionary().containsKey(s)) {
                 result.clear();
                 return;
             }
-            if (result.isEmpty() && fields.getPlusWords().isEmpty())
-                result.addAll(invertedIndex.getDictionary().get(s));
-            else
-                result.retainAll(invertedIndex.getDictionary().get(s));
-        });
+            result.retainAll(invertedIndex.getDictionary().get(s));
+        }
     }
 }
