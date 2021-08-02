@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matin\\Documents\\Matin\\CE\\Internship\\CodeStar\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj": {}
+    "D:\\Jobs\\Code_Star\\Projects\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matin\\Documents\\Matin\\CE\\Internship\\CodeStar\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj": {
+    "D:\\Jobs\\Code_Star\\Projects\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matin\\Documents\\Matin\\CE\\Internship\\CodeStar\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj",
+        "projectUniqueName": "D:\\Jobs\\Code_Star\\Projects\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj",
         "projectName": "education",
-        "projectPath": "C:\\Users\\matin\\Documents\\Matin\\CE\\Internship\\CodeStar\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj",
-        "packagesPath": "C:\\Users\\matin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matin\\Documents\\Matin\\CE\\Internship\\CodeStar\\Summer1400-SE-Team20\\Phase-4\\education\\obj\\",
+        "projectPath": "D:\\Jobs\\Code_Star\\Projects\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj",
+        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+        "outputPath": "D:\\Jobs\\Code_Star\\Projects\\Summer1400-SE-Team20\\Phase-4\\education\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\matin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
