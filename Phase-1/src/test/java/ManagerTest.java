@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ManagerTest {
-    private final static String DATASET_PATH = "src/main/java/docs1";
+    private final static String DATASET_PATH = "src/test/testDocs";
     private final Manager manager = new Manager(DATASET_PATH);
 
     @Test
