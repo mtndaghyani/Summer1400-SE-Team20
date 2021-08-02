@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lTnH8zI/7jc3grN9JjIBSxuee8RiL3inxU9skMzaCFny96Jr6jR6cNaw8wsc3r0e8jr8+TNGQMXF9Ji5Q1oFmQ==",
+  "dgSpecHash": "eU2GG+ActUTcZ0RC/QuWAn4DsKeD9UbRpjHIwLX/a7Iox3yYCmjX21FXrOJDoAzQmomp2b02edurKXn5tCU2tw==",
   "success": true,
   "projectFilePath": "C:\\Users\\matin\\Documents\\Matin\\CE\\Internship\\CodeStar\\Summer1400-SE-Team20\\Phase-4\\education\\education.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\matin\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

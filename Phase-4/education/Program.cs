@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 namespace education
 {
@@ -6,7 +9,9 @@ namespace education
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string content = File.ReadAllText("resources/Scores.json");
+            JObject json = JObject.Parse(content);
+            Console.WriteLine(json);
         }
     }
 }
