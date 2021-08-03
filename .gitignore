@@ -6,3 +6,7 @@
 *.iml
 */obj/
 */bin/
+/Phase-5/SearchEngine/obj/
+/Phase-5/SearchEngine/bin/
+/Phase-5/SearchEngineTests/bin/
+/Phase-5/SearchEngineTests/obj/
