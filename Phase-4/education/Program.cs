@@ -29,6 +29,7 @@ namespace education
         private const string SlnPath = "../../../";
         private const string ScorePath = SlnPath + "resources/Scores.json";
         private const string StudentsPath = SlnPath + "resources/Students.json";
+        private const int NumTopStudents = 3;
 
         static void Main(string[] args)
         {
@@ -49,7 +50,7 @@ namespace education
                     new {Average=q.Average, FirstName=w.FirstName, LastName=w.LastName})
                     .OrderByDescending(q => q.Average).ToList();
 
-            topStudents = topStudents.Take(3).ToList();
+            topStudents = topStudents.Take(NumTopStudents).ToList();
             foreach (var x in topStudents)
             {
                 Console.WriteLine(x);
