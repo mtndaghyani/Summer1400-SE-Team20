@@ -1,0 +1,12 @@
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\bin\Debug\net5.0\SearchEngine.deps.json
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\bin\Debug\net5.0\SearchEngine.dll
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\bin\Debug\net5.0\ref\SearchEngine.dll
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\bin\Debug\net5.0\SearchEngine.pdb
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.csproj.AssemblyReference.cache
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.GeneratedMSBuildEditorConfig.editorconfig
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.AssemblyInfoInputs.cache
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.AssemblyInfo.cs
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.csproj.CoreCompileInputs.cache
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.dll
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\ref\SearchEngine.dll
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngine\obj\Debug\net5.0\SearchEngine.pdb
