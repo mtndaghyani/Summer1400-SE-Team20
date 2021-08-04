@@ -1,7 +1,9 @@
-﻿namespace SearchEngine.Interfaces
+﻿using System.Collections.Generic;
+
+namespace SearchEngine.Interfaces
 {
-    public class IReader
+    public interface IReader
     {
-        
+        List<string> Read();
     }
 }
