@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine
@@ -15,10 +16,12 @@ namespace SearchEngine
         {
             SearchFields fields = new SearchFields();
 
-            Pattern pattern = Pattern.compile(SearchWordRegex);
-            Matcher matcher = pattern.matcher(statement);
-            while (matcher.find()) {
-                string word = matcher.group(2);
+            Regex rx = new Regex(SearchWordRegex,
+                RegexOptions.Compiled);
+            MatchCollection matches = rx.Matches(statement);
+            foreach (Match match in matches) {
+                GroupCollection groups = match.Groups;
+                string word = groups[2].Value;
                 if (word.StartsWith("+"))
                     fields.AddPlusWord(_invertedIndex.Stem(word.Substring(1)));
                 else if (word.StartsWith("-"))
