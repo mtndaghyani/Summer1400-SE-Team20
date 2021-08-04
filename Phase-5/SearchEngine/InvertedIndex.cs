@@ -22,7 +22,7 @@ namespace SearchEngine
         {
             var contents = _reader.Read();
 
-            return contents.Select(content => new List<string>(content.Split(" "))
+            return contents.Select(content => new List<string>(content.Trim().Split(" "))
                     .Select(Stem))
                 .Select(a => a.ToList()).ToList();
         }

@@ -62,7 +62,7 @@ namespace SearchEngineTests
         {
             var result = new List<string>();
             result.Add("Video.");
-            result.Add("Online,");
+            result.Add("Online,   ");
             result.Add("Theme; video");
             return result;
         }
