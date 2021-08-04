@@ -7,5 +7,7 @@ namespace SearchEngine.Interfaces
         
         List<List<string>> GetTokens();
         Dictionary<string, HashSet<int>> GetDictionary();
+
+        public string Stem(string word);
     }
 }
