@@ -9,7 +9,13 @@ namespace SearchEngine
         private const string EndDelimiter = "$";
         public void Run()
         {
-            throw new System.NotImplementedException();
+            String toSearch;
+            Console.WriteLine("Enter something:");
+            while (!Finished(toSearch = Console.ReadLine())) {
+                HashSet<int> docs = DoSearch(toSearch);
+                PrintElements(docs);
+                Console.WriteLine("Enter something:");
+            }
         }
 
         public void MakeSearchEngine()
