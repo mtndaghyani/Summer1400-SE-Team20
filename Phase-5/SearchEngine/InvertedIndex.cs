@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine
@@ -8,11 +7,13 @@ namespace SearchEngine
     public class InvertedIndex : IInvertedIndex
     {
         private IReader _reader;
+        private IWordProcessor _wordProcessor;
         private Dictionary<string, HashSet<int>> _dictionary;
 
-        public InvertedIndex(IReader reader)
+        public InvertedIndex(IReader reader, IWordProcessor wordProcessor)
         {
             _reader = reader;
+            _wordProcessor = wordProcessor;
             _dictionary = new Dictionary<string, HashSet<int>>();
             SetUpDictionary();
         }
@@ -22,7 +23,7 @@ namespace SearchEngine
             var contents = _reader.Read();
 
             return contents.Select(content => new List<string>(content.Split(" "))
-                    .Select(word => word.ToLower()))
+                    .Select(Stem))
                 .Select(a => a.ToList()).ToList();
         }
 
@@ -47,7 +48,7 @@ namespace SearchEngine
 
         public string Stem(string word)
         {
-            return word;
+            return _wordProcessor.ProcessWord(word);
         }
     }
 }
