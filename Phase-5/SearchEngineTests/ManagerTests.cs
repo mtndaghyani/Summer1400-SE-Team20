@@ -50,7 +50,6 @@ namespace SearchEngineTests
         [Fact]
         public void TestRun_WHEN_firstInputIsDollar_EXPECT_emptyOutput(){
             Manager runManager = Substitute.ForPartsOf<Manager>();
-            // runManager.Configure().Finished("$\n").Returns(true);
             runManager.Configure().Finished(Arg.Any<string>()).Returns(true);
             var reader = new StringReader("$\n");
             Console.SetIn(reader);
@@ -60,6 +59,34 @@ namespace SearchEngineTests
             runManager.Run();
             Assert.Equal("Enter something:\n",
                 writer.GetStringBuilder().ToString().Replace("\r", ""));
+        }
+        
+        [Fact]
+        public void TestRun_WHEN_secondInputIsDollar_EXPECT_oneTimeOutput()
+        {
+            Manager runManager = Substitute.ForPartsOf<Manager>();
+            runManager.Configure().Finished(Arg.Any<string>()).Returns(false);
+            // when(runManager.finished(any(String.class))).thenReturn(false);
+            runManager.Configure().Finished("$").Returns(true);
+            // when(runManager.finished("$")).thenReturn(true);
+            runManager.Configure().DoSearch(Arg.Any<string>()).Returns(new HashSet<int>(new int[] {1, 3}));
+            // when(runManager.doSearch(any(String.class))).thenReturn(new HashSet<>(Arrays.asList(1, 3)));
+            // doCallRealMethod().when(runManager).printElements(ArgumentMatchers.<Iterable<Integer>>any());
+            // doCallRealMethod().when(runManager).run();
+            // ByteArrayInputStream in = new ByteArrayInputStream("Something\r\n$\r\n".getBytes());
+            // System.setIn(in);
+            // ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            // System.setOut(new PrintStream(outContent));
+            
+            var reader = new StringReader("Something\r\n$\r\n");
+            Console.SetIn(reader);
+            var writer = new StringWriter();
+            Console.SetOut(writer);
+
+            runManager.Run();
+            Assert.Equal("Enter something:\nelement1\nelement3\nEnter something:\n",
+                writer.GetStringBuilder().ToString().Replace("\r", ""));
+            // assertEquals("Enter something:\nelement1\nelement3\nEnter something:\n", outContent.toString().replaceAll("\r", ""));
         }
     }
 }

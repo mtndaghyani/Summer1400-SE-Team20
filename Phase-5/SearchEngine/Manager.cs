@@ -7,6 +7,9 @@ namespace SearchEngine
     public class Manager : IManager
     {
         private const string EndDelimiter = "$";
+        
+        private InvertedIndex _invertedIndex;
+        private SearchEngineCore _engine;
         public void Run()
         {
             string toSearch;
@@ -20,17 +23,19 @@ namespace SearchEngine
 
         public void MakeSearchEngine()
         {
-            throw new System.NotImplementedException();
+            _engine = new SearchEngineCore(_invertedIndex);
         }
 
         public void MakeInvertedIndex(string path)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Indexing started...");
+            _invertedIndex = new InvertedIndex(new FileReader(path));
+            Console.WriteLine("DONE");
         }
 
         public HashSet<int> DoSearch(string toSearch)
         {
-            throw new System.NotImplementedException();
+            return _engine.search(toSearch);
         }
 
         public void PrintElements(ICollection<int> elements)
@@ -40,7 +45,7 @@ namespace SearchEngine
             }
         }
 
-        public bool Finished(string toSearch)
+        public virtual bool Finished(string toSearch)
         {
             return toSearch == EndDelimiter;
         }
