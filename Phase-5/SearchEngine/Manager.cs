@@ -29,7 +29,7 @@ namespace SearchEngine
         public void MakeInvertedIndex(string path)
         {
             Console.WriteLine("Indexing started...");
-            _invertedIndex = new InvertedIndex(new FileReader(path), new WordProcessor());
+            _invertedIndex = new InvertedIndex(new FileReader(path), new WordProcessor() );
             Console.WriteLine("DONE");
         }
 
