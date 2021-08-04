@@ -11,12 +11,12 @@ namespace SearchEngineTests
 {
     public class ManagerTests
     {
-        private const string DatasetPath = "src/test/testDocs";
+        private const string DatasetPath = "../../../testDocs";
         private readonly IManager _manager;
 
         public ManagerTests()
         {
-            _manager = new Manager();
+            _manager = new Manager(DatasetPath);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace SearchEngineTests
         
         [Fact]
         public void TestRun_WHEN_firstInputIsDollar_EXPECT_emptyOutput(){
-            Manager runManager = Substitute.ForPartsOf<Manager>();
+            Manager runManager = Substitute.ForPartsOf<Manager>(DatasetPath);
             runManager.Configure().Finished(Arg.Any<string>()).Returns(true);
             var reader = new StringReader("$\n");
             Console.SetIn(reader);
@@ -64,12 +64,14 @@ namespace SearchEngineTests
         [Fact]
         public void TestRun_WHEN_secondInputIsDollar_EXPECT_oneTimeOutput()
         {
-            Manager runManager = Substitute.ForPartsOf<Manager>();
-            runManager.Configure().Finished(Arg.Any<string>()).Returns(false);
+            Manager runManager = Substitute.ForPartsOf<Manager>(DatasetPath);
+            
+            runManager.Finished(Arg.Any<string>()).Returns(false);
+            runManager.Finished("$").Returns(true);
             // when(runManager.finished(any(String.class))).thenReturn(false);
-            runManager.Configure().Finished("$").Returns(true);
+            
             // when(runManager.finished("$")).thenReturn(true);
-            runManager.Configure().DoSearch(Arg.Any<string>()).Returns(new HashSet<int>(new int[] {1, 3}));
+            runManager.DoSearch(Arg.Any<string>()).Returns(new HashSet<int>(new int[] {1, 3}));
             // when(runManager.doSearch(any(String.class))).thenReturn(new HashSet<>(Arrays.asList(1, 3)));
             // doCallRealMethod().when(runManager).printElements(ArgumentMatchers.<Iterable<Integer>>any());
             // doCallRealMethod().when(runManager).run();

@@ -10,6 +10,12 @@ namespace SearchEngine
         
         private InvertedIndex _invertedIndex;
         private SearchEngineCore _engine;
+
+        public Manager(string path)
+        {
+            MakeInvertedIndex(path);
+            MakeSearchEngine();
+        }
         public void Run()
         {
             string toSearch;
