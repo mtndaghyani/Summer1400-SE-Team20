@@ -101,3 +101,5 @@ D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngineTests\obj\De
 D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngineTests\obj\Debug\net5.0\ref\SearchEngineTests.dll
 D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngineTests\obj\Debug\net5.0\SearchEngineTests.pdb
 D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngineTests\obj\Debug\net5.0\SearchEngineTests.genruntimeconfig.cache
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngineTests\bin\Debug\net5.0\Castle.Core.dll
+D:\Jobs\Code_Star\Projects\Summer1400-SE-Team20\Phase-5\SearchEngineTests\bin\Debug\net5.0\NSubstitute.dll

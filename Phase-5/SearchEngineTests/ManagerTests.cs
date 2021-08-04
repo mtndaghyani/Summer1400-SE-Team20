@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using NSubstitute;
+using NSubstitute.Extensions;
 using SearchEngine;
 using SearchEngine.Interfaces;
 using Xunit;
@@ -42,6 +44,21 @@ namespace SearchEngineTests
             writer.Flush();
             
             Assert.Equal("element2\nelement5\nelement7\n",
+                writer.GetStringBuilder().ToString().Replace("\r", ""));
+        }
+        
+        [Fact]
+        public void TestRun_WHEN_firstInputIsDollar_EXPECT_emptyOutput(){
+            Manager runManager = Substitute.ForPartsOf<Manager>();
+            // runManager.Configure().Finished("$\n").Returns(true);
+            runManager.Configure().Finished(Arg.Any<string>()).Returns(true);
+            var reader = new StringReader("$\n");
+            Console.SetIn(reader);
+            var writer = new StringWriter();
+            Console.SetOut(writer);
+
+            runManager.Run();
+            Assert.Equal("Enter something:\n",
                 writer.GetStringBuilder().ToString().Replace("\r", ""));
         }
     }
