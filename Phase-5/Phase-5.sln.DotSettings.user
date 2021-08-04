@@ -1,8 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=106007d1_002D8726_002D4386_002D84c7_002Dc7f3a7defc6f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestFinished_WHEN_dollarSign_EXPECT_true" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::3971B7B1-9388-4431-84BC-DDE48C418CB9::net5.0::SearchEngineTests.ManagerTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::3971B7B1-9388-4431-84BC-DDE48C418CB9::net5.0::SearchEngineTests.InvertedIndexTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::3971B7B1-9388-4431-84BC-DDE48C418CB9::net5.0::SearchEngineTests.FileReaderTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
