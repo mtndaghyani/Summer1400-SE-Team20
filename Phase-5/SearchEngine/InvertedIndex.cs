@@ -44,5 +44,10 @@ namespace SearchEngine
                 counter += 1;
             }
         }
+
+        public string Stem(string word)
+        {
+            return word;
+        }
     }
 }

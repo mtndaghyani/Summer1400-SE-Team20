@@ -9,7 +9,7 @@ namespace SearchEngine
         private const string EndDelimiter = "$";
         public void Run()
         {
-            String toSearch;
+            string toSearch;
             Console.WriteLine("Enter something:");
             while (!Finished(toSearch = Console.ReadLine())) {
                 HashSet<int> docs = DoSearch(toSearch);
