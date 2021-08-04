@@ -9,13 +9,21 @@ namespace SearchEngineTests
     public class InvertedIndexTests
     {
         private IReader _readerMock;
+        private IWordProcessor _wordProcessorMock;
         private IInvertedIndex _invertedIndex;
 
         public InvertedIndexTests()
         {
             _readerMock = Substitute.For<IReader>();
+            _wordProcessorMock = Substitute.For<IWordProcessor>();
+            
             _readerMock.Read().Returns(GetContents());
-            _invertedIndex = new InvertedIndex(_readerMock);
+            _wordProcessorMock.ProcessWord("Video.").Returns("video");
+            _wordProcessorMock.ProcessWord("Online,").Returns("online");
+            _wordProcessorMock.ProcessWord("Theme;").Returns("theme");
+            _wordProcessorMock.ProcessWord("video").Returns("video");
+
+            _invertedIndex = new InvertedIndex(_readerMock, _wordProcessorMock);
         }
 
         [Fact]
@@ -53,9 +61,9 @@ namespace SearchEngineTests
         private List<string> GetContents()
         {
             var result = new List<string>();
-            result.Add("Video");
-            result.Add("Online");
-            result.Add("Theme video");
+            result.Add("Video.");
+            result.Add("Online,");
+            result.Add("Theme; video");
             return result;
         }
 
