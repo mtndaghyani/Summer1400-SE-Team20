@@ -1,7 +1,11 @@
 */.idea/
 */target/
+*/src/main/java/docs/
+*/src/main/java/docs1/
+*/src/main/java/EnglishData/
+*/src/main/resources/documents/EnglishData/
+*/src/main/resources/documents/docs1/
 *.iml
-/Phase-1/
 /Phase-5/
 bin
 obj
