@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
 
 namespace education
 {
-    class Program
+    static class Program
     {
         private const string SlnPath = "../../../";
         private const string ScorePath = SlnPath + "resources/Scores.json";
@@ -15,23 +13,7 @@ namespace education
 
         private static void Main(string[] args)
         {
-            var scoresContent = File.ReadAllText(ScorePath);
-            var scores = JsonConvert.DeserializeObject<List<ScoreSheet>>(scoresContent);
-            var studentsContent = File.ReadAllText(StudentsPath);
-            var students = JsonConvert.DeserializeObject<List<Student>>(studentsContent);
-
-            var averageList = StudentAveragePair.GetAverageList(scores);
-            var topStudents = StudentRecord.GetTopStudentsRecords(TopStudentsCount, averageList, students);
-            
-            PrintElements(topStudents);
-        }
-
-        private static void PrintElements<T>(IEnumerable<T> elements)
-        {
-            foreach (var x in elements)
-            {
-                Console.WriteLine(x);
-            }
+            Manager.Run(ScorePath, StudentsPath, TopStudentsCount);
         }
     }
 }
