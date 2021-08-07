@@ -20,19 +20,14 @@ namespace education
             var studentsContent = File.ReadAllText(StudentsPath);
             var students = JsonConvert.DeserializeObject<List<Student>>(studentsContent);
 
-            var averageList = scores.GroupBy(
-                x => x.StudentNumber,
-                x => x.Score,
-                (key, val) => new {StudentNumber = key, Average = val.ToList().Average()}).ToList();
+            var averageList = StudentAveragePair.GetAverageList(scores);
+            var topStudents = StudentRecord.GetTopStudentsRecords(TopStudentsCount, averageList, students);
+            
+            PrintEnumerable(topStudents);
+        }
 
-            var topStudents = averageList.Join(
-                    students,
-                    x => x.StudentNumber, y => y.StudentNumber,
-                    (q, w) => new {Average = q.Average, FirstName = w.FirstName, LastName = w.LastName})
-                .OrderByDescending(q => q.Average)
-                .ToList();
-
-            topStudents = topStudents.Take(TopStudentsCount).ToList();
+        private static void PrintEnumerable(List<StudentRecord> topStudents)
+        {
             foreach (var x in topStudents)
             {
                 Console.WriteLine(x);
