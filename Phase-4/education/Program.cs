@@ -1,8 +1,4 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-using System.Linq;
-
-namespace education
+﻿namespace education
 {
     static class Program
     {
