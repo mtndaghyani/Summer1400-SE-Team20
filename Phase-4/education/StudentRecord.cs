@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace education
 {
@@ -24,6 +25,17 @@ namespace education
                     (q, w) => new StudentRecord(w.FirstName, w.LastName, q.Average))
                 .OrderByDescending(q => q.Average);
             return topStudents.Take(topStudentsCount).ToList();
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            foreach (var info in this.GetType().GetProperties())
+            {
+                var value = info.GetValue(this, null) ?? "(null)";
+                sb.AppendLine(info.Name + ": " + value.ToString());
+            }
+            return sb.ToString();
         }
     }
 }

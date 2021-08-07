@@ -23,12 +23,12 @@ namespace education
             var averageList = StudentAveragePair.GetAverageList(scores);
             var topStudents = StudentRecord.GetTopStudentsRecords(TopStudentsCount, averageList, students);
             
-            PrintEnumerable(topStudents);
+            PrintElements(topStudents);
         }
 
-        private static void PrintEnumerable(List<StudentRecord> topStudents)
+        private static void PrintElements<T>(IEnumerable<T> elements)
         {
-            foreach (var x in topStudents)
+            foreach (var x in elements)
             {
                 Console.WriteLine(x);
             }
