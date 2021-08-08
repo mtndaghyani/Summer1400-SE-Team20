@@ -1,10 +1,6 @@
 name: build
 
-on:
-  push:
-    branches: [ main, phase-6-test ]
-  pull_request:
-    branches: [ main, phase-6-test ]
+on: [push, pull_request]
 
 jobs:
   build:
