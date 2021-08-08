@@ -1,12 +1,19 @@
-import java.nio.file.Paths;
+import javax.sound.midi.Soundbank;
+import java.util.Scanner;
 
 public class Main {
-    private final static String BASE_PATH = Paths.get(System.getProperty("user.dir")).toString();
-    private final static String DATASET_PATH = Paths.get(BASE_PATH,
-            "src", "main", "resources", "documents/docs1").toString();
-
-
     public static void main(String[] args) {
-        new Manager(DATASET_PATH).run();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Indexing started...");
+        InvertedIndex invertedIndex = new InvertedIndex("src/main/java/docs1");
+        System.out.println("DONE");
+        String toSearch;
+        System.out.println("Enter something:");
+        while (!(toSearch = scanner.nextLine()).equalsIgnoreCase("end")) {
+            for (Integer id : invertedIndex.search(toSearch)) {
+                System.out.println("doc" + id.toString());
+            }
+            System.out.println("Enter something:");
+        }
     }
 }
