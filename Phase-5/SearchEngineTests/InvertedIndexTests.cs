@@ -41,7 +41,7 @@ namespace SearchEngineTests
             Assert.Equal(expected.Keys, actual.Keys);
             foreach (var (key, value) in expected)
             {
-                Assert.Equal(actual[key], value);
+                Assert.Equal(value, actual[key]);
             }
 
         }
