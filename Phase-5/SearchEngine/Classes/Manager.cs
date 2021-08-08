@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SearchEngine.Interfaces;
 
-namespace SearchEngine
+namespace SearchEngine.Classes
 {
     public class Manager : IManager
     {
@@ -24,7 +24,7 @@ namespace SearchEngine
             while (!Finished(toSearch = Console.ReadLine()))
             {
                 HashSet<int> docs = DoSearch(toSearch);
-                PrintElements(docs);
+                IManager.PrintElements(docs);
                 Console.WriteLine("Enter something:");
             }
         }
@@ -45,14 +45,7 @@ namespace SearchEngine
         {
             return _engine.search(toSearch);
         }
-
-        public void PrintElements(ICollection<int> elements)
-        {
-            foreach (int id in elements)
-            {
-                Console.WriteLine("element" + id);
-            }
-        }
+        
 
         public virtual bool Finished(string toSearch)
         {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using SearchEngine.Interfaces;
 
-namespace SearchEngine
+namespace SearchEngine.Classes
 {
     public class FileReader : IReader
     {

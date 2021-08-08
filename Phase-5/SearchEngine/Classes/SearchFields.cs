@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SearchEngine.Interfaces;
 
-namespace SearchEngine
+namespace SearchEngine.Classes
 {
     public class SearchFields : ISearchFields
     {

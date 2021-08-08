@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using SearchEngine.Interfaces;
 
-namespace SearchEngine
+namespace SearchEngine.Classes
 {
     public class WordProcessor: IWordProcessor
     {

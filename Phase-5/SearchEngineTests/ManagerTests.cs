@@ -4,6 +4,7 @@ using System.IO;
 using NSubstitute;
 using NSubstitute.Extensions;
 using SearchEngine;
+using SearchEngine.Classes;
 using SearchEngine.Interfaces;
 using Xunit;
 
@@ -43,7 +44,7 @@ namespace SearchEngineTests
             var writer = new StringWriter();
             Console.SetOut(writer);
             List<int> testList = new List<int>(new int[] {2, 5, 7});
-            _manager.PrintElements(testList);
+            IManager.PrintElements(testList);
             writer.Flush();
 
             Assert.Equal("element2\nelement5\nelement7\n",
