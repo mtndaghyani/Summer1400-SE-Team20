@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using NSubstitute;
 using NSubstitute.Extensions;
-using SearchEngine;
 using SearchEngine.Classes;
 using SearchEngine.Interfaces;
 using Xunit;

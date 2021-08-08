@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using NSubstitute;
-using SearchEngine;
 using SearchEngine.Classes;
 using SearchEngine.Interfaces;
 using Xunit;
