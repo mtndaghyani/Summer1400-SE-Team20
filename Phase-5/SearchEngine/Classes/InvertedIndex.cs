@@ -23,8 +23,7 @@ namespace SearchEngine
             var contents = _reader.Read();
 
             return contents.Select(content => new List<string>(content.Trim().Split(" "))
-                    .Select(Stem))
-                .Select(a => a.ToList()).ToList();
+                .Select(Stem).ToList()).ToList();
         }
 
         public Dictionary<string, HashSet<int>> GetDictionary()
@@ -43,8 +42,9 @@ namespace SearchEngine
                     if (_dictionary.ContainsKey(token))
                         _dictionary[token].Add(documentCounter);
                     else
-                        _dictionary.Add(token, new HashSet<int>() {documentCounter});    
+                        _dictionary.Add(token, new HashSet<int>() {documentCounter});
                 }
+
                 documentCounter += 1;
             }
         }
