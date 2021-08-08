@@ -35,14 +35,17 @@ namespace SearchEngine
         private void SetUpDictionary()
         {
             var tokens = GetTokens();
-            var counter = 1;
-            foreach (var token in tokens.SelectMany(tokenList => tokenList))
+            var documentCounter = 1;
+            foreach (var tokenList in tokens)
             {
-                if (_dictionary.ContainsKey(token))
-                    _dictionary[token].Add(counter);
-                else
-                    _dictionary.Add(token, new HashSet<int>() {counter});
-                counter += 1;
+                foreach (var token in tokenList)
+                {
+                    if (_dictionary.ContainsKey(token))
+                        _dictionary[token].Add(documentCounter);
+                    else
+                        _dictionary.Add(token, new HashSet<int>() {documentCounter});    
+                }
+                documentCounter += 1;
             }
         }
 
