@@ -24,7 +24,7 @@ namespace SearchEngineTests
             string toSearch = "salam";
             List<int> expected = new List<int>(new int[] {1, 3});
             SearchEngineCore searchEngine = new SearchEngineCore(_invertedIndex);
-            HashSet<int> searchResult = searchEngine.search(toSearch);
+            HashSet<int> searchResult = searchEngine.Search(toSearch);
             Assert.Equal(expected, searchResult);
         }
         
@@ -33,7 +33,7 @@ namespace SearchEngineTests
             String toSearch = "salam +jinks";
             List<int> expected = new List<int>(new int[]{1});
             SearchEngineCore searchEngine = new SearchEngineCore(_invertedIndex);
-            HashSet<int> searchResult = searchEngine.search(toSearch);
+            HashSet<int> searchResult = searchEngine.Search(toSearch);
             Assert.Equal(expected, searchResult);
         }
 
@@ -42,7 +42,7 @@ namespace SearchEngineTests
             String toSearch = "-salam jinks";
             List<int> expected = new List<int>(new int[]{26, 30});
             SearchEngineCore searchEngine = new SearchEngineCore(_invertedIndex);
-            HashSet<int> searchResult = searchEngine.search(toSearch);
+            HashSet<int> searchResult = searchEngine.Search(toSearch);
             Assert.Equal(expected, searchResult);
         }
     }

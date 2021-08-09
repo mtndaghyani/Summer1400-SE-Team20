@@ -14,10 +14,9 @@ namespace SearchEngine.Classes
         private static MatchCollection GetMatches(string statement)
         {
             return SearchRegex.Matches(statement);
-            ;
         }
 
-        private static string GetSecondGroupMatched(Match match)
+        private static string GetRegexSecondGroupMatched(Match match)
         {
             var groups = match.Groups;
             var word = groups[2].Value;
@@ -29,13 +28,19 @@ namespace SearchEngine.Classes
             this._invertedIndex = invertedIndex;
         }
 
-        public HashSet<int> search(string statement)
+        public HashSet<int> Search(string statement)
+        {
+            var fields = MakeSearchFields(statement);
+            return AdvancedSearch(fields);
+        }
+
+        private SearchFields MakeSearchFields(string statement)
         {
             var fields = new SearchFields();
             var matches = GetMatches(statement);
             foreach (Match match in matches)
             {
-                var word = GetSecondGroupMatched(match);
+                var word = GetRegexSecondGroupMatched(match);
                 if (word.StartsWith("+"))
                 {
                     fields.AddPlusWord(_invertedIndex.Stem(word.Substring(1)));
@@ -50,7 +55,7 @@ namespace SearchEngine.Classes
                 }
             }
 
-            return AdvancedSearch(fields);
+            return fields;
         }
 
 

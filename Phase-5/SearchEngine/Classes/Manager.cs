@@ -43,7 +43,7 @@ namespace SearchEngine.Classes
 
         public virtual HashSet<int> DoSearch(string toSearch)
         {
-            return _engine.search(toSearch);
+            return _engine.Search(toSearch);
         }
         
 
