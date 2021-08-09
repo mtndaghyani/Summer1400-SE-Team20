@@ -29,12 +29,12 @@ namespace SearchEngine.Classes
             }
         }
 
-        public void MakeSearchEngine()
+        private void MakeSearchEngine()
         {
             _engine = new SearchEngineCore(_invertedIndex);
         }
 
-        public void MakeInvertedIndex(string path)
+        private void MakeInvertedIndex(string path)
         {
             Console.WriteLine("Indexing started...");
             _invertedIndex = new InvertedIndex(new FileReader(path), new WordProcessor());

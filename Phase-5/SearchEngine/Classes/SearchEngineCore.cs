@@ -23,11 +23,17 @@ namespace SearchEngine.Classes
                 GroupCollection groups = match.Groups;
                 string word = groups[2].Value;
                 if (word.StartsWith("+"))
+                {
                     fields.AddPlusWord(_invertedIndex.Stem(word.Substring(1)));
+                }
                 else if (word.StartsWith("-"))
+                {
                     fields.AddMinusWord(_invertedIndex.Stem(word.Substring(1)));
+                }
                 else
+                {
                     fields.AddSimpleWord(_invertedIndex.Stem(word));
+                }
             }
             return AdvancedSearch(fields);
         }
