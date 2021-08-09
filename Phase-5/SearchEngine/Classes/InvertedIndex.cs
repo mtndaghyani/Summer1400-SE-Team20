@@ -6,6 +6,7 @@ namespace SearchEngine.Classes
 {
     public class InvertedIndex : IInvertedIndex
     {
+        private const string Seperator = " ";
         private IReader _reader;
         private IWordProcessor _wordProcessor;
         private Dictionary<string, HashSet<int>> _dictionary;
@@ -22,8 +23,13 @@ namespace SearchEngine.Classes
         {
             var contents = _reader.Read();
 
-            return contents.Select(content => new List<string>(content.Trim().Split(" "))
-                .Select(Stem).ToList()).ToList();
+            return contents.Select(TokenizeContent).ToList();
+        }
+
+        private List<string> TokenizeContent(string content)
+        {
+            var words = content.Trim().Split(Seperator);
+            return new List<string>(words.Select(Stem)).ToList();
         }
 
         public Dictionary<string, HashSet<int>> GetDictionary()
