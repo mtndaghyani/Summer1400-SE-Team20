@@ -3,13 +3,8 @@
 */src/main/java/docs/
 */src/main/java/docs1/
 */src/main/java/EnglishData/
+*/src/main/resources/documents/EnglishData/
+*/src/main/resources/documents/docs1/
 *.iml
-*/obj/
-*/bin/
-/Phase-5/SearchEngine/obj/
-/Phase-5/SearchEngine/bin/
-/Phase-5/SearchEngineTests/bin/
-/Phase-5/SearchEngineTests/obj/
-/Phase-5/Phase-5.sln.DotSettings.user
-
-
+bin
+obj
