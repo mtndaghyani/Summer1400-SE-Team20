@@ -9,13 +9,13 @@ namespace SearchEngine.Classes
         private const string Separator = " ";
         private IReader _reader;
         private IWordProcessor _wordProcessor;
-        private Dictionary<string, HashSet<int>> _invertedIndex;
+        private IInvertedIndex<string, int> _invertedIndex;
 
-        public Indexer(IReader reader, IWordProcessor wordProcessor)
+        public Indexer(IReader reader, IWordProcessor wordProcessor, IInvertedIndex<string, int> invertedIndex)
         {
             _reader = reader;
             _wordProcessor = wordProcessor;
-            _invertedIndex = new Dictionary<string, HashSet<int>>();
+            _invertedIndex = invertedIndex;
             SetUpInvertedIndex();
         }
 
@@ -32,7 +32,7 @@ namespace SearchEngine.Classes
             return new List<string>(words.Select(Stem)).ToList();
         }
 
-        public Dictionary<string, HashSet<int>> GetInvertedIndex()
+        public IInvertedIndex<string, int> GetInvertedIndex()
         {
             return _invertedIndex;
         }
@@ -45,10 +45,7 @@ namespace SearchEngine.Classes
             {
                 foreach (var token in tokenList)
                 {
-                    if (_invertedIndex.ContainsKey(token))
-                        _invertedIndex[token].Add(documentCounter);
-                    else
-                        _invertedIndex.Add(token, new HashSet<int>() {documentCounter});
+                    _invertedIndex.Add(token, documentCounter);
                 }
 
                 documentCounter += 1;

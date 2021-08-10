@@ -11,51 +11,26 @@ namespace SearchEngineTests
         private IReader _readerMock;
         private IWordProcessor _wordProcessorMock;
         private IIndexer _indexer;
-
+        private IInvertedIndex<string, int> _invertedIndexMock;
         public IndexerTests()
         {
             _readerMock = Substitute.For<IReader>();
             _wordProcessorMock = Substitute.For<IWordProcessor>();
+            _invertedIndexMock = Substitute.For<IInvertedIndex<string, int>>();
             
             _readerMock.Read().Returns(GetContents());
             _wordProcessorMock.ProcessWord("Video.").Returns("video");
             _wordProcessorMock.ProcessWord("Online,").Returns("online");
             _wordProcessorMock.ProcessWord("Theme;").Returns("theme");
             _wordProcessorMock.ProcessWord("video").Returns("video");
-
-            _indexer = new Indexer(_readerMock, _wordProcessorMock);
+            
+            _indexer = new Indexer(_readerMock, _wordProcessorMock, _invertedIndexMock);
         }
 
         [Fact]
         public void TestGetTokens()
         {
             Assert.Equal(GetCorrectTokens(), _indexer.GetDocumentsTokens());
-        }
-
-        [Fact]
-        public void TestSetUpInvertedIndex()
-        {
-            var expected = GetCorrectInvertedIndex();
-            var actual = _indexer.GetInvertedIndex();
-            Assert.Equal(3, actual.Count);
-            Assert.Equal(expected.Keys, actual.Keys);
-            foreach (var (key, value) in expected)
-            {
-                Assert.Equal(value, actual[key]);
-            }
-
-        }
-
-        private Dictionary<string,HashSet<int>> GetCorrectInvertedIndex()
-        {
-            var correctInvertedIndex = new Dictionary<string, HashSet<int>>();
-            var s1 = new HashSet<int>(){1, 3};
-            var s2 = new HashSet<int>(){2};
-            var s3 = new HashSet<int>(){3};
-            correctInvertedIndex.Add("video", s1);
-            correctInvertedIndex.Add("online", s2);
-            correctInvertedIndex.Add("theme", s3);
-            return correctInvertedIndex;
         }
 
         private List<string> GetContents()

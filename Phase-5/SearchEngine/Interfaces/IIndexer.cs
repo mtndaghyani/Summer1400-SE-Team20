@@ -6,7 +6,7 @@ namespace SearchEngine.Interfaces
     {
         
         List<List<string>> GetDocumentsTokens();
-        Dictionary<string, HashSet<int>> GetInvertedIndex();
+        IInvertedIndex<string, int> GetInvertedIndex();
 
         string Stem(string word);
     }
