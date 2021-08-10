@@ -4,11 +4,11 @@ namespace SearchEngine.Interfaces
 {
     public interface ISearchFields
     {
-        public List<string> GetSimpleWords();
-        public List<string> GetMinusWords();
-        public List<string> GetPlusWords();
-        public void AddSimpleWord(string word);
-        public void AddPlusWord(string word);
-        public void AddMinusWord(string word);
+        List<string> GetSimpleWords();
+        List<string> GetMinusWords();
+        List<string> GetPlusWords();
+        void AddSimpleWord(string word);
+        void AddPlusWord(string word);
+        void AddMinusWord(string word);
     }
 }

@@ -8,6 +8,6 @@ namespace SearchEngine.Interfaces
         List<List<string>> GetDocumentsTokens();
         Dictionary<string, HashSet<int>> GetInvertedIndex();
 
-        public string Stem(string word);
+        string Stem(string word);
     }
 }

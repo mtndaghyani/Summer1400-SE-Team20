@@ -12,7 +12,7 @@ namespace SearchEngine.Interfaces
                 Console.WriteLine("element" + id);
             }
         }
-        public void Run();
+        void Run();
         bool Finished(string toSearch);
     }
 }
