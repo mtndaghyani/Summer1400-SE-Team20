@@ -74,7 +74,7 @@ namespace SearchEngine.Classes
             foreach (string s in fields.GetMinusWords())
             {
                 if (_indexer.GetInvertedIndex().ContainsKey(s))
-                    result.ExceptWith(_indexer.GetInvertedIndex()[s]);
+                    result.ExceptWith(_indexer.GetInvertedIndex().Get(s));
             }
         }
 
@@ -83,14 +83,14 @@ namespace SearchEngine.Classes
             if (!result.Any() && !fields.GetPlusWords().Any())
             {
                 foreach (string s in fields.GetSimpleWords())
-                    result.UnionWith(_indexer.GetInvertedIndex()[s]);
+                    result.UnionWith(_indexer.GetInvertedIndex().Get(s));
                 return;
             }
 
             foreach (string s in fields.GetPlusWords())
             {
                 if (_indexer.GetInvertedIndex().ContainsKey(s))
-                    result.UnionWith(_indexer.GetInvertedIndex()[s]);
+                    result.UnionWith(_indexer.GetInvertedIndex().Get(s));
             }
         }
 
@@ -104,7 +104,7 @@ namespace SearchEngine.Classes
                     return;
                 }
 
-                result.IntersectWith(_indexer.GetInvertedIndex()[s]);
+                result.IntersectWith(_indexer.GetInvertedIndex().Get(s));
             }
         }
     }

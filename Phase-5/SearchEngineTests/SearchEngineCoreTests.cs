@@ -10,13 +10,16 @@ namespace SearchEngineTests
     public class SearchEngineCoreTests
     {
         private readonly IIndexer _indexer = Substitute.For<IIndexer>();
+        private IInvertedIndex<string, int> _invertedIndexMock = Substitute.For<IInvertedIndex<string, int>>();
+        
         public SearchEngineCoreTests()
         {
-            Dictionary<string, HashSet<int>> dictionary = new Dictionary<string, HashSet<int>>();
-            dictionary.Add("salam", new HashSet<int>(new int[]{1, 3}));
-            dictionary.Add("jinks", new HashSet<int>(new int[]{1, 26, 30}));
-            _indexer.GetInvertedIndex().Returns(dictionary);
+            _invertedIndexMock.Get("salam").Returns(new HashSet<int>(new int[] {1, 3}));
+            _invertedIndexMock.Get("jinks").Returns(new HashSet<int>(new int[] {1, 26, 30}));
+            _invertedIndexMock.ContainsKey("salam").Returns(true);
+            _invertedIndexMock.ContainsKey("jinks").Returns(true);
             _indexer.Stem(Arg.Any<string>()).Returns(i => i[0]);
+            _indexer.GetInvertedIndex().Returns(_invertedIndexMock);
         }
         
         [Fact]
