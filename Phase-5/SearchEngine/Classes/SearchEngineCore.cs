@@ -8,7 +8,7 @@ namespace SearchEngine.Classes
     public class SearchEngineCore : ISearchEngineCore
     {
         private const string SearchWordRegex = "([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)";
-        private readonly IInvertedIndex _invertedIndex;
+        private readonly IIndexer _indexer;
         private static readonly Regex SearchRegex = new Regex(SearchWordRegex, RegexOptions.Compiled);
 
         private static MatchCollection GetMatches(string statement)
@@ -23,9 +23,9 @@ namespace SearchEngine.Classes
             return word;
         }
 
-        public SearchEngineCore(IInvertedIndex invertedIndex)
+        public SearchEngineCore(IIndexer indexer)
         {
-            this._invertedIndex = invertedIndex;
+            this._indexer = indexer;
         }
 
         public HashSet<int> Search(string statement)
@@ -43,15 +43,15 @@ namespace SearchEngine.Classes
                 var word = GetRegexSecondGroupMatched(match);
                 if (word.StartsWith("+"))
                 {
-                    fields.AddPlusWord(_invertedIndex.Stem(word.Substring(1)));
+                    fields.AddPlusWord(_indexer.Stem(word.Substring(1)));
                 }
                 else if (word.StartsWith("-"))
                 {
-                    fields.AddMinusWord(_invertedIndex.Stem(word.Substring(1)));
+                    fields.AddMinusWord(_indexer.Stem(word.Substring(1)));
                 }
                 else
                 {
-                    fields.AddSimpleWord(_invertedIndex.Stem(word));
+                    fields.AddSimpleWord(_indexer.Stem(word));
                 }
             }
 
@@ -73,8 +73,8 @@ namespace SearchEngine.Classes
         {
             foreach (string s in fields.GetMinusWords())
             {
-                if (_invertedIndex.GetDictionary().ContainsKey(s))
-                    result.ExceptWith(_invertedIndex.GetDictionary()[s]);
+                if (_indexer.GetInvertedIndex().ContainsKey(s))
+                    result.ExceptWith(_indexer.GetInvertedIndex()[s]);
             }
         }
 
@@ -83,14 +83,14 @@ namespace SearchEngine.Classes
             if (!result.Any() && !fields.GetPlusWords().Any())
             {
                 foreach (string s in fields.GetSimpleWords())
-                    result.UnionWith(_invertedIndex.GetDictionary()[s]);
+                    result.UnionWith(_indexer.GetInvertedIndex()[s]);
                 return;
             }
 
             foreach (string s in fields.GetPlusWords())
             {
-                if (_invertedIndex.GetDictionary().ContainsKey(s))
-                    result.UnionWith(_invertedIndex.GetDictionary()[s]);
+                if (_indexer.GetInvertedIndex().ContainsKey(s))
+                    result.UnionWith(_indexer.GetInvertedIndex()[s]);
             }
         }
 
@@ -98,13 +98,13 @@ namespace SearchEngine.Classes
         {
             foreach (string s in fields.GetSimpleWords())
             {
-                if (!_invertedIndex.GetDictionary().ContainsKey(s))
+                if (!_indexer.GetInvertedIndex().ContainsKey(s))
                 {
                     result.Clear();
                     return;
                 }
 
-                result.IntersectWith(_invertedIndex.GetDictionary()[s]);
+                result.IntersectWith(_indexer.GetInvertedIndex()[s]);
             }
         }
     }

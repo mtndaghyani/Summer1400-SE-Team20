@@ -6,13 +6,13 @@ using Xunit;
 
 namespace SearchEngineTests
 {
-    public class InvertedIndexTests
+    public class IndexerTests
     {
         private IReader _readerMock;
         private IWordProcessor _wordProcessorMock;
-        private IInvertedIndex _invertedIndex;
+        private IIndexer _indexer;
 
-        public InvertedIndexTests()
+        public IndexerTests()
         {
             _readerMock = Substitute.For<IReader>();
             _wordProcessorMock = Substitute.For<IWordProcessor>();
@@ -23,20 +23,20 @@ namespace SearchEngineTests
             _wordProcessorMock.ProcessWord("Theme;").Returns("theme");
             _wordProcessorMock.ProcessWord("video").Returns("video");
 
-            _invertedIndex = new InvertedIndex(_readerMock, _wordProcessorMock);
+            _indexer = new Indexer(_readerMock, _wordProcessorMock);
         }
 
         [Fact]
         public void TestGetTokens()
         {
-            Assert.Equal(GetCorrectTokens(), _invertedIndex.GetTokens());
+            Assert.Equal(GetCorrectTokens(), _indexer.GetDocumentsTokens());
         }
 
         [Fact]
-        public void TestSetUpDictionary()
+        public void TestSetUpInvertedIndex()
         {
-            var expected = GetCorrectDictionary();
-            var actual = _invertedIndex.GetDictionary();
+            var expected = GetCorrectInvertedIndex();
+            var actual = _indexer.GetInvertedIndex();
             Assert.Equal(3, actual.Count);
             Assert.Equal(expected.Keys, actual.Keys);
             foreach (var (key, value) in expected)
@@ -46,16 +46,16 @@ namespace SearchEngineTests
 
         }
 
-        private Dictionary<string,HashSet<int>> GetCorrectDictionary()
+        private Dictionary<string,HashSet<int>> GetCorrectInvertedIndex()
         {
-            var correctDictionary = new Dictionary<string, HashSet<int>>();
+            var correctInvertedIndex = new Dictionary<string, HashSet<int>>();
             var s1 = new HashSet<int>(){1, 3};
             var s2 = new HashSet<int>(){2};
             var s3 = new HashSet<int>(){3};
-            correctDictionary.Add("video", s1);
-            correctDictionary.Add("online", s2);
-            correctDictionary.Add("theme", s3);
-            return correctDictionary;
+            correctInvertedIndex.Add("video", s1);
+            correctInvertedIndex.Add("online", s2);
+            correctInvertedIndex.Add("theme", s3);
+            return correctInvertedIndex;
         }
 
         private List<string> GetContents()

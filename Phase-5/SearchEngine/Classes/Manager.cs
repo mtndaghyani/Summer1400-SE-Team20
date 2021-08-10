@@ -8,7 +8,7 @@ namespace SearchEngine.Classes
     {
         private const string EndDelimiter = "$";
 
-        private InvertedIndex _invertedIndex;
+        private Indexer _indexer;
         private SearchEngineCore _engine;
 
         public Manager(string path)
@@ -31,13 +31,13 @@ namespace SearchEngine.Classes
 
         private void MakeSearchEngine()
         {
-            _engine = new SearchEngineCore(_invertedIndex);
+            _engine = new SearchEngineCore(_indexer);
         }
 
         private void MakeInvertedIndex(string path)
         {
             Console.WriteLine("Indexing started...");
-            _invertedIndex = new InvertedIndex(new FileReader(path), new WordProcessor());
+            _indexer = new Indexer(new FileReader(path), new WordProcessor());
             Console.WriteLine("DONE");
         }
 

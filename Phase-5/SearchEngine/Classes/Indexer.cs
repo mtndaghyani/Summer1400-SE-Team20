@@ -4,22 +4,22 @@ using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
 {
-    public class InvertedIndex : IInvertedIndex
+    public class Indexer : IIndexer
     {
-        private const string Seperator = " ";
+        private const string Separator = " ";
         private IReader _reader;
         private IWordProcessor _wordProcessor;
-        private Dictionary<string, HashSet<int>> _dictionary;
+        private Dictionary<string, HashSet<int>> _invertedIndex;
 
-        public InvertedIndex(IReader reader, IWordProcessor wordProcessor)
+        public Indexer(IReader reader, IWordProcessor wordProcessor)
         {
             _reader = reader;
             _wordProcessor = wordProcessor;
-            _dictionary = new Dictionary<string, HashSet<int>>();
-            SetUpDictionary();
+            _invertedIndex = new Dictionary<string, HashSet<int>>();
+            SetUpInvertedIndex();
         }
 
-        public List<List<string>> GetTokens()
+        public List<List<string>> GetDocumentsTokens()
         {
             var contents = _reader.Read();
 
@@ -28,27 +28,27 @@ namespace SearchEngine.Classes
 
         private List<string> TokenizeContent(string content)
         {
-            var words = content.Trim().Split(Seperator);
+            var words = content.Trim().Split(Separator);
             return new List<string>(words.Select(Stem)).ToList();
         }
 
-        public Dictionary<string, HashSet<int>> GetDictionary()
+        public Dictionary<string, HashSet<int>> GetInvertedIndex()
         {
-            return _dictionary;
+            return _invertedIndex;
         }
 
-        private void SetUpDictionary()
+        private void SetUpInvertedIndex()
         {
-            var tokens = GetTokens();
+            var tokens = GetDocumentsTokens();
             var documentCounter = 1;
             foreach (var tokenList in tokens)
             {
                 foreach (var token in tokenList)
                 {
-                    if (_dictionary.ContainsKey(token))
-                        _dictionary[token].Add(documentCounter);
+                    if (_invertedIndex.ContainsKey(token))
+                        _invertedIndex[token].Add(documentCounter);
                     else
-                        _dictionary.Add(token, new HashSet<int>() {documentCounter});
+                        _invertedIndex.Add(token, new HashSet<int>() {documentCounter});
                 }
 
                 documentCounter += 1;
