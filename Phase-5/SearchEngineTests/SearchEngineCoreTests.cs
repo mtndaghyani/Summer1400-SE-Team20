@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using NSubstitute;
 using SearchEngine.Classes;
 using SearchEngine.Database;
 using SearchEngine.Interfaces;
 using Xunit;
-using Xunit.Sdk;
 
 namespace SearchEngineTests
 {
@@ -15,18 +13,6 @@ namespace SearchEngineTests
         private readonly IIndexer<string, Document> _indexer = Substitute.For<IIndexer<string, Document>>();
         private IInvertedIndex<string, Document> _invertedIndexMock = Substitute.For<IInvertedIndex<string, Document>>();
 
-        private void AssertEqualDocumentEnumerable(ICollection<int> expected, HashSet<Document> result)
-        {
-            Assert.Equal(expected.Count, result.Count);
-            foreach (Document doc in result)
-            {
-                if (!expected.Contains(doc.DocumentId))
-                {
-                    Assert.True(false, "Hashset does not contain expected value.");
-                }
-            }
-        }
-        
         public SearchEngineCoreTests()
         {
             _invertedIndexMock.Get("salam").Returns(new HashSet<Document>(new Document[]
@@ -71,6 +57,18 @@ namespace SearchEngineTests
             SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
             AssertEqualDocumentEnumerable(expected, searchResult);
+        }
+        
+        private void AssertEqualDocumentEnumerable(ICollection<int> expected, HashSet<Document> result)
+        {
+            Assert.Equal(expected.Count, result.Count);
+            foreach (Document doc in result)
+            {
+                if (!expected.Contains(doc.DocumentId))
+                {
+                    Assert.True(false, "Hashset does not contain expected value.");
+                }
+            }
         }
     }
 }
