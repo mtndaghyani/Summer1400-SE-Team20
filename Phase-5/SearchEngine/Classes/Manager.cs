@@ -11,10 +11,15 @@ namespace SearchEngine.Classes
 
         private Indexer _indexer;
         private SearchEngineCore _engine;
+        private readonly Config _config;
 
-        public Manager(string path)
+        public Manager(string configPath)
         {
-            MakeInvertedIndex(path);
+            _config = Config.ReadConfig(configPath);
+            if (_config.DoIndex)
+            {
+                MakeInvertedIndex();
+            }
             MakeSearchEngine();
         }
 
@@ -35,10 +40,14 @@ namespace SearchEngine.Classes
             _engine = new SearchEngineCore(_indexer);
         }
 
-        private void MakeInvertedIndex(string path)
+        private void MakeInvertedIndex()
         {
             Console.WriteLine("Indexing started...");
-            _indexer = new Indexer(new FileReader(path), new WordProcessor(), new DictionaryInvertedIndex());
+            IInvertedIndex<string, Document> invertedIndex = _config.IndexFromDb ?
+                                                            new DatabaseInvertedIndex() :
+                                                            new DictionaryInvertedIndex();
+            _indexer = new Indexer(new FileReader(_config.DataPath), new WordProcessor(), invertedIndex);
+                        
             Console.WriteLine("DONE");
         }
 
