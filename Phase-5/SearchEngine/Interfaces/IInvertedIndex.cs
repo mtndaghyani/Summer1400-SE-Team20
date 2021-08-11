@@ -6,7 +6,6 @@ namespace SearchEngine.Interfaces
     {
         bool ContainsKey(TKey key);
         HashSet<TValue> Get(TKey key);
-
         void Add(TKey key, TValue value);
     }
 }

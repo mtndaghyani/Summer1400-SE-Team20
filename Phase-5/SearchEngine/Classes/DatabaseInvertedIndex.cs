@@ -5,7 +5,7 @@ using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
 {
-    public class DatabaseInvertedIndex : IInvertedIndex<string, int>
+    public class DatabaseInvertedIndex : IInvertedIndex<string, Document>
     {
         public bool ContainsKey(string key)
         {
@@ -15,25 +15,25 @@ namespace SearchEngine.Classes
             return contains;
         }
 
-        public HashSet<int> Get(string key)
+        public HashSet<Document> Get(string key)
         {
             using var indexingContext = new IndexingContext();
             WordDocumentsPair pair = indexingContext.WordDocumentsPairs.Single(x => x.Word == key);
-            return new HashSet<int>(pair.DocumentIDs);
+            return new HashSet<Document>(pair.Documents);
         }
 
-        public void Add(string key, int value)
+        public void Add(string key, Document value)
         {
             using var indexingContext = new IndexingContext();
             WordDocumentsPair pair = indexingContext.WordDocumentsPairs.Single(x => x.Word == key);
             if (pair == null)
             {
-                pair = new WordDocumentsPair() {Word = key, DocumentIDs = new List<int>() {value}};
+                pair = new WordDocumentsPair() {Word = key, Documents = new List<Document>() {value}};
                 indexingContext.WordDocumentsPairs.Add(pair);
             }
             else
             {
-                pair.DocumentIDs.Add(value);
+                pair.Documents.Add(value);
                 indexingContext.WordDocumentsPairs.Update(pair);
             }
 
