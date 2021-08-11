@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
@@ -8,7 +9,7 @@ namespace SearchEngine.Classes
     public class SearchEngineCore : ISearchEngineCore
     {
         private const string SearchWordRegex = "([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)";
-        private readonly IIndexer _indexer;
+        private readonly IIndexer<string, Document> _indexer;
         private static readonly Regex SearchRegex = new Regex(SearchWordRegex, RegexOptions.Compiled);
 
         private static MatchCollection GetMatches(string statement)
@@ -23,12 +24,12 @@ namespace SearchEngine.Classes
             return word;
         }
 
-        public SearchEngineCore(IIndexer indexer)
+        public SearchEngineCore(IIndexer<string, Document> indexer)
         {
             this._indexer = indexer;
         }
 
-        public HashSet<int> Search(string statement)
+        public HashSet<Document> Search(string statement)
         {
             var fields = MakeSearchFields(statement);
             return AdvancedSearch(fields);
@@ -59,9 +60,9 @@ namespace SearchEngine.Classes
         }
 
 
-        private HashSet<int> AdvancedSearch(SearchFields fields)
+        private HashSet<Document> AdvancedSearch(SearchFields fields)
         {
-            HashSet<int> result = new HashSet<int>();
+            var result = new HashSet<Document>();
             HandlePlusWords(fields, result);
             HandleSimpleWords(fields, result);
             HandleMinusWords(fields, result);
@@ -69,7 +70,7 @@ namespace SearchEngine.Classes
             return result;
         }
 
-        private void HandleMinusWords(ISearchFields fields, HashSet<int> result)
+        private void HandleMinusWords(ISearchFields fields, HashSet<Document> result)
         {
             foreach (string s in fields.GetMinusWords())
             {
@@ -78,7 +79,7 @@ namespace SearchEngine.Classes
             }
         }
 
-        private void HandlePlusWords(ISearchFields fields, HashSet<int> result)
+        private void HandlePlusWords(ISearchFields fields, HashSet<Document> result)
         {
             if (!result.Any() && !fields.GetPlusWords().Any())
             {
@@ -94,7 +95,7 @@ namespace SearchEngine.Classes
             }
         }
 
-        private void HandleSimpleWords(ISearchFields fields, HashSet<int> result)
+        private void HandleSimpleWords(ISearchFields fields, HashSet<Document> result)
         {
             foreach (string s in fields.GetSimpleWords())
             {

@@ -1,21 +1,45 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using NSubstitute;
 using SearchEngine.Classes;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 using Xunit;
+using Xunit.Sdk;
 
 namespace SearchEngineTests
 {
     public class SearchEngineCoreTests
     {
-        private readonly IIndexer _indexer = Substitute.For<IIndexer>();
-        private IInvertedIndex<string, int> _invertedIndexMock = Substitute.For<IInvertedIndex<string, int>>();
+        private readonly IIndexer<string, Document> _indexer = Substitute.For<IIndexer<string, Document>>();
+        private IInvertedIndex<string, Document> _invertedIndexMock = Substitute.For<IInvertedIndex<string, Document>>();
+
+        private void AssertEqualDocumentEnumerable(ICollection<int> expected, HashSet<Document> result)
+        {
+            Assert.Equal(expected.Count, result.Count);
+            foreach (Document doc in result)
+            {
+                if (!expected.Contains(doc.DocumentId))
+                {
+                    Assert.True(false, "Hashset does not contain expected value.");
+                }
+            }
+        }
         
         public SearchEngineCoreTests()
         {
-            _invertedIndexMock.Get("salam").Returns(new HashSet<int>(new int[] {1, 3}));
-            _invertedIndexMock.Get("jinks").Returns(new HashSet<int>(new int[] {1, 26, 30}));
+            _invertedIndexMock.Get("salam").Returns(new HashSet<Document>(new Document[]
+            {
+                new(){DocumentId = 1},
+                new(){DocumentId = 3}
+            }));
+            _invertedIndexMock.Get("jinks").Returns(new HashSet<Document>(new Document[]
+            {
+                new(){DocumentId = 1},
+                new(){DocumentId = 26},
+                new(){DocumentId = 30}
+            }));
             _invertedIndexMock.ContainsKey("salam").Returns(true);
             _invertedIndexMock.ContainsKey("jinks").Returns(true);
             _indexer.Stem(Arg.Any<string>()).Returns(i => i[0]);
@@ -27,8 +51,8 @@ namespace SearchEngineTests
             string toSearch = "salam";
             List<int> expected = new List<int>(new int[] {1, 3});
             SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
-            HashSet<int> searchResult = searchEngine.Search(toSearch);
-            Assert.Equal(expected, searchResult);
+            HashSet<Document> searchResult = searchEngine.Search(toSearch);
+            AssertEqualDocumentEnumerable(expected, searchResult);
         }
         
         [Fact]
@@ -36,8 +60,8 @@ namespace SearchEngineTests
             String toSearch = "salam +jinks";
             List<int> expected = new List<int>(new int[]{1});
             SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
-            HashSet<int> searchResult = searchEngine.Search(toSearch);
-            Assert.Equal(expected, searchResult);
+            HashSet<Document> searchResult = searchEngine.Search(toSearch);
+            AssertEqualDocumentEnumerable(expected, searchResult);
         }
 
         [Fact]
@@ -45,8 +69,8 @@ namespace SearchEngineTests
             String toSearch = "-salam jinks";
             List<int> expected = new List<int>(new int[]{26, 30});
             SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
-            HashSet<int> searchResult = searchEngine.Search(toSearch);
-            Assert.Equal(expected, searchResult);
+            HashSet<Document> searchResult = searchEngine.Search(toSearch);
+            AssertEqualDocumentEnumerable(expected, searchResult);
         }
     }
 }

@@ -2,12 +2,10 @@
 
 namespace SearchEngine.Interfaces
 {
-    public interface IIndexer
+    public interface IIndexer <TKey, TValue>
     {
-        
-        List<List<string>> GetDocumentsTokens();
-        IInvertedIndex<string, int> GetInvertedIndex();
-
+        List<List<TKey>> GetDocumentsTokens();
+        IInvertedIndex<TKey, TValue> GetInvertedIndex();
         string Stem(string word);
     }
 }

@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
 {
-    public class DictionaryInvertedIndex : IInvertedIndex<string, int>
+    public class DictionaryInvertedIndex : IInvertedIndex<string, Document>
     {
-        private readonly Dictionary<string, HashSet<int>> _invertedIndex = new();
+        private readonly Dictionary<string, HashSet<Document>> _invertedIndex = new();
 
         public bool ContainsKey(string key)
         {
             return _invertedIndex.ContainsKey(key);
         }
 
-        public HashSet<int> Get(string key)
+        public HashSet<Document> Get(string key)
         {
             return _invertedIndex[key];
         }
 
-        public void Add(string key, int value)
+        public void Add(string key, Document value)
         {
             if (_invertedIndex.ContainsKey(key))
             {
@@ -25,7 +26,7 @@ namespace SearchEngine.Classes
             }
             else
             {
-                _invertedIndex[key] = new HashSet<int>() {value};
+                _invertedIndex[key] = new HashSet<Document>() {value};
             }
         }
     }

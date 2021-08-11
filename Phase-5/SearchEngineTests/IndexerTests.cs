@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NSubstitute;
 using SearchEngine.Classes;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 using Xunit;
 
@@ -10,13 +11,13 @@ namespace SearchEngineTests
     {
         private IReader _readerMock;
         private IWordProcessor _wordProcessorMock;
-        private IIndexer _indexer;
-        private IInvertedIndex<string, int> _invertedIndexMock;
+        private IIndexer<string, Document> _indexer;
+        private IInvertedIndex<string, Document> _invertedIndexMock;
         public IndexerTests()
         {
             _readerMock = Substitute.For<IReader>();
             _wordProcessorMock = Substitute.For<IWordProcessor>();
-            _invertedIndexMock = Substitute.For<IInvertedIndex<string, int>>();
+            _invertedIndexMock = Substitute.For<IInvertedIndex<string, Document>>();
             
             _readerMock.Read().Returns(GetContents());
             _wordProcessorMock.ProcessWord("Video.").Returns("video");

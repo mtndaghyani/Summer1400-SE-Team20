@@ -4,6 +4,7 @@ using System.IO;
 using NSubstitute;
 using NSubstitute.Extensions;
 using SearchEngine.Classes;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 using Xunit;
 
@@ -42,7 +43,12 @@ namespace SearchEngineTests
         {
             var writer = new StringWriter();
             Console.SetOut(writer);
-            List<int> testList = new List<int>(new int[] {2, 5, 7});
+            var testList = new List<Document>(new Document[]
+            {
+                new Document(){DocumentId = 2}, 
+                new Document(){DocumentId = 5},
+                new Document(){DocumentId = 7}
+            });
             IManager.PrintElements(testList);
             writer.Flush();
 
@@ -73,7 +79,11 @@ namespace SearchEngineTests
             runManager.Finished(Arg.Any<string>()).Returns(false);
             runManager.Finished("$").Returns(true);
 
-            runManager.DoSearch(Arg.Any<string>()).Returns(new HashSet<int>(new int[] {1, 3}));
+            runManager.DoSearch(Arg.Any<string>()).Returns(new HashSet<Document>(new Document[]
+            {
+                new Document(){DocumentId = 1},
+                new Document(){DocumentId = 3}
+            }));
 
             var reader = new StringReader("Something\r\n$\r\n");
             Console.SetIn(reader);

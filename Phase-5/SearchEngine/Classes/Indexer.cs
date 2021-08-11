@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
 {
-    public class Indexer : IIndexer
+    public class Indexer : IIndexer <string, Document>
     {
         private const string Separator = " ";
         private IReader _reader;
         private IWordProcessor _wordProcessor;
-        private IInvertedIndex<string, int> _invertedIndex;
+        private IInvertedIndex<string, Document> _invertedIndex;
 
-        public Indexer(IReader reader, IWordProcessor wordProcessor, IInvertedIndex<string, int> invertedIndex)
+        public Indexer(IReader reader, IWordProcessor wordProcessor, IInvertedIndex<string, Document> invertedIndex)
         {
             _reader = reader;
             _wordProcessor = wordProcessor;
@@ -32,7 +33,7 @@ namespace SearchEngine.Classes
             return new List<string>(words.Select(Stem)).ToList();
         }
 
-        public IInvertedIndex<string, int> GetInvertedIndex()
+        public IInvertedIndex<string, Document> GetInvertedIndex()
         {
             return _invertedIndex;
         }
@@ -43,9 +44,10 @@ namespace SearchEngine.Classes
             var documentCounter = 1;
             foreach (var tokenList in tokens)
             {
+                Document document = new Document() {DocumentId = documentCounter};
                 foreach (var token in tokenList)
                 {
-                    _invertedIndex.Add(token, documentCounter);
+                    _invertedIndex.Add(token, document);
                 }
 
                 documentCounter += 1;

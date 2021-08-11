@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using SearchEngine.Database;
 
 namespace SearchEngine.Interfaces
 {
     public interface IManager
     {
-        static void PrintElements(ICollection<int> elements)
+        static void PrintElements(ICollection<Document> elements)
         {
-            foreach (int id in elements)
+            foreach (Document doc in elements)
             {
-                Console.WriteLine("element" + id);
+                Console.WriteLine("element" + doc.DocumentId);
             }
         }
         void Run();

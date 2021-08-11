@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using SearchEngine.Database;
 
 namespace SearchEngine.Interfaces
 {
     public interface ISearchEngineCore
     {
-        HashSet<int> Search(string statement);
+        HashSet<Document> Search(string statement);
     }
 }

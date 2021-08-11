@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SearchEngine.Database;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
@@ -23,7 +24,7 @@ namespace SearchEngine.Classes
             Console.WriteLine("Enter something:");
             while (!Finished(toSearch = Console.ReadLine()))
             {
-                HashSet<int> docs = DoSearch(toSearch);
+                HashSet<Document> docs = DoSearch(toSearch);
                 IManager.PrintElements(docs);
                 Console.WriteLine("Enter something:");
             }
@@ -41,7 +42,7 @@ namespace SearchEngine.Classes
             Console.WriteLine("DONE");
         }
 
-        public virtual HashSet<int> DoSearch(string toSearch)
+        public virtual HashSet<Document> DoSearch(string toSearch)
         {
             return _engine.Search(toSearch);
         }
