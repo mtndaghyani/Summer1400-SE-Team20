@@ -4,7 +4,7 @@ namespace SearchEngine.Database
 {
     public class IndexingContext:DbContext
     {
-        public DbSet<WordDocumentsPair> WordDocumentsPairs;
+        public DbSet<WordDocumentsPair> WordDocumentsPairs { get; set; }
         private const string ConnectionString = "Server=.; Database=IndexingDB; Trusted_Connection=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

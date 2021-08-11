@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SearchEngine.Database
 {
     public class WordDocumentsPair
     {
-        public string Word;
-        public List<int> DocumentIDs;
+        [Key] 
+        public string Word { get; set; }
+        public List<Document> Documents { get; set; }
     }
+    
+    
+
 }

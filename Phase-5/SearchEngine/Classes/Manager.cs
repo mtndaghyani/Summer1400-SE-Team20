@@ -37,7 +37,7 @@ namespace SearchEngine.Classes
         private void MakeInvertedIndex(string path)
         {
             Console.WriteLine("Indexing started...");
-            _indexer = new Indexer(new FileReader(path), new WordProcessor());
+            _indexer = new Indexer(new FileReader(path), new WordProcessor(), new DictionaryInvertedIndex());
             Console.WriteLine("DONE");
         }
 
