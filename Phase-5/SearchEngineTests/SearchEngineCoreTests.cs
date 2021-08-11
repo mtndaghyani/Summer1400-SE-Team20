@@ -17,14 +17,14 @@ namespace SearchEngineTests
         {
             _invertedIndexMock.Get("salam").Returns(new HashSet<Document>(new Document[]
             {
-                new(){DocumentId = 1},
-                new(){DocumentId = 3}
+                new(){DocumentIdentification = 1},
+                new(){DocumentIdentification = 3}
             }));
             _invertedIndexMock.Get("jinks").Returns(new HashSet<Document>(new Document[]
             {
-                new(){DocumentId = 1},
-                new(){DocumentId = 26},
-                new(){DocumentId = 30}
+                new(){DocumentIdentification = 1},
+                new(){DocumentIdentification = 26},
+                new(){DocumentIdentification = 30}
             }));
             _invertedIndexMock.Get("whatsUp").Returns(new HashSet<Document>());
             _invertedIndexMock.ContainsKey("salam").Returns(true);
@@ -74,7 +74,7 @@ namespace SearchEngineTests
             Assert.Equal(expected.Count, result.Count);
             foreach (Document doc in result)
             {
-                if (!expected.Contains(doc.DocumentId))
+                if (!expected.Contains(doc.DocumentIdentification))
                 {
                     Assert.True(false, "Hashset does not contain expected value.");
                 }

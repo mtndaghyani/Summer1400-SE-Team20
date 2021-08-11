@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
@@ -8,8 +9,12 @@ namespace SearchEngine.Database
 {
     public class Document
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int DocumentId { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int DocumentIdentification { get; set; }
+
+        public List<Word> Words { get; set; }
         
         public override bool Equals(Object obj)
         {
@@ -20,12 +25,12 @@ namespace SearchEngine.Database
             }
 
             Document doc = (Document) obj;
-            return (DocumentId == doc.DocumentId);
+            return (DocumentIdentification == doc.DocumentIdentification);
         }
 
         public override int GetHashCode()
         {
-            return DocumentId;
+            return DocumentIdentification;
         }
     }
 }

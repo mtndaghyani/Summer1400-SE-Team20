@@ -10,7 +10,7 @@ namespace SearchEngine.Classes
         public bool ContainsKey(string key)
         {
             using var indexingContext = new IndexingContext();
-            var contains = indexingContext.WordDocumentsPairs.Any(x => x.Word == key);
+            var contains = indexingContext.WordDocumentsPairs.Any(x => x.Statement == key);
             indexingContext.SaveChanges();
             return contains;
         }
@@ -18,23 +18,23 @@ namespace SearchEngine.Classes
         public HashSet<Document> Get(string key)
         {
             using var indexingContext = new IndexingContext();
-            WordDocumentsPair pair = indexingContext.WordDocumentsPairs.SingleOrDefault(x => x.Word == key);
+            Word pair = indexingContext.WordDocumentsPairs.SingleOrDefault(x => x.Statement == key);
             return pair != null ? new HashSet<Document>(pair.Documents) : new HashSet<Document>();
         }
 
         public void Add(string key, Document value)
         {
             using var indexingContext = new IndexingContext();
-            WordDocumentsPair pair = indexingContext.WordDocumentsPairs.Single(x => x.Word == key);
+            Word pair = indexingContext.WordDocumentsPairs.SingleOrDefault(x => x.Statement == key);
             if (pair == null)
             {
-                pair = new WordDocumentsPair() {Word = key, Documents = new List<Document>() {value}};
+                pair = new Word() {Statement = key, Documents = new List<Document>() {value}};
                 indexingContext.WordDocumentsPairs.Add(pair);
             }
             else
             {
-                pair.Documents.Add(value);
-                indexingContext.WordDocumentsPairs.Update(pair);
+                // pair.Documents.Add(value);
+                // indexingContext.WordDocumentsPairs.Update(pair);
             }
 
             indexingContext.SaveChanges();

@@ -3,10 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SearchEngine.Database
 {
-    public class WordDocumentsPair
+    public class Word
     {
-        [Key] 
-        public string Word { get; set; }
+        [Key]
+        public int Id { get; set; }
+        // [Key] 
+        public string Statement { get; set; }
         public List<Document> Documents { get; set; }
     }
     

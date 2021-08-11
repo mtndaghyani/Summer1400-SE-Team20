@@ -45,9 +45,9 @@ namespace SearchEngineTests
             Console.SetOut(writer);
             var testList = new List<Document>(new Document[]
             {
-                new Document(){DocumentId = 2}, 
-                new Document(){DocumentId = 5},
-                new Document(){DocumentId = 7}
+                new Document(){DocumentIdentification = 2}, 
+                new Document(){DocumentIdentification = 5},
+                new Document(){DocumentIdentification = 7}
             });
             IManager.PrintElements(testList);
             writer.Flush();
@@ -81,8 +81,8 @@ namespace SearchEngineTests
 
             runManager.DoSearch(Arg.Any<string>()).Returns(new HashSet<Document>(new Document[]
             {
-                new Document(){DocumentId = 1},
-                new Document(){DocumentId = 3}
+                new Document(){DocumentIdentification = 1},
+                new Document(){DocumentIdentification = 3}
             }));
 
             var reader = new StringReader("Something\r\n$\r\n");
