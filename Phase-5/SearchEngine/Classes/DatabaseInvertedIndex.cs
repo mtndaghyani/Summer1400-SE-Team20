@@ -18,8 +18,8 @@ namespace SearchEngine.Classes
         public HashSet<Document> Get(string key)
         {
             using var indexingContext = new IndexingContext();
-            WordDocumentsPair pair = indexingContext.WordDocumentsPairs.Single(x => x.Word == key);
-            return new HashSet<Document>(pair.Documents);
+            WordDocumentsPair pair = indexingContext.WordDocumentsPairs.SingleOrDefault(x => x.Word == key);
+            return pair != null ? new HashSet<Document>(pair.Documents) : new HashSet<Document>();
         }
 
         public void Add(string key, Document value)

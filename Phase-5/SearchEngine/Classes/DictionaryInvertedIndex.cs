@@ -15,7 +15,7 @@ namespace SearchEngine.Classes
 
         public HashSet<Document> Get(string key)
         {
-            return _invertedIndex[key];
+            return _invertedIndex.ContainsKey(key) ? _invertedIndex[key] : new HashSet<Document>();
         }
 
         public void Add(string key, Document value)

@@ -26,10 +26,20 @@ namespace SearchEngineTests
                 new(){DocumentId = 26},
                 new(){DocumentId = 30}
             }));
+            _invertedIndexMock.Get("whatsUp").Returns(new HashSet<Document>());
             _invertedIndexMock.ContainsKey("salam").Returns(true);
             _invertedIndexMock.ContainsKey("jinks").Returns(true);
             _indexer.Stem(Arg.Any<string>()).Returns(i => i[0]);
             _indexer.GetInvertedIndex().Returns(_invertedIndexMock);
+        }
+        
+        [Fact]
+        public void TestSearch_WHEN_whatsUp_EXPECTED_empty(){
+            string toSearch = "whatsUp";
+            List<int> expected = new List<int>(new int[] {});
+            SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
+            HashSet<Document> searchResult = searchEngine.Search(toSearch);
+            AssertEqualDocumentEnumerable(expected, searchResult);
         }
         
         [Fact]
