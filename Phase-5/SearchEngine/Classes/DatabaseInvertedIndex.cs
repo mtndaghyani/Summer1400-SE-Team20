@@ -32,22 +32,17 @@ namespace SearchEngine.Classes
 
         public void Add(string key, Document value)
         {
-            // if (!IndexingContext.Documents.Any(x => x.DocumentNumber == value.DocumentNumber))
-            // {
-            //     IndexingContext.Documents.Add(value);
-            // }
-
             Word word = IndexingContext.Words.SingleOrDefault(x => x.Statement == key);
             if (word == null)
             {
                 var newWord = new Word() {Statement = key};
-                var pair = new Word_Document(){WordId = newWord.Statement, DocumentId = value.Id};
+                var pair = new Word_Document(){Word = newWord, Document = value};
                 IndexingContext.Words.Add(newWord);
                 IndexingContext.WordDocuments.Add(pair);
             }
             else
             {
-                IndexingContext.WordDocuments.Add(new Word_Document() {WordId = word.Statement, DocumentId = value.Id});
+                IndexingContext.WordDocuments.Add(new Word_Document() {Word = word, Document = value});
             }
 
             IndexingContext.SaveChanges();
