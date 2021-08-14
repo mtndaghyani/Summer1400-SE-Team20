@@ -17,7 +17,7 @@ namespace SearchEngine.Classes
             _reader = reader;
             _wordProcessor = wordProcessor;
             _invertedIndex = invertedIndex;
-            SetUpInvertedIndex();
+            
         }
 
         public List<List<string>> GetDocumentsTokens()
@@ -38,7 +38,7 @@ namespace SearchEngine.Classes
             return _invertedIndex;
         }
 
-        private void SetUpInvertedIndex()
+        public void SetUpInvertedIndex()
         {
             var tokens = GetDocumentsTokens();
             var documentCounter = 1;
