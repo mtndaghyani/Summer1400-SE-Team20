@@ -5,11 +5,11 @@ namespace SearchEngine.Database
 {
     public class Word
     {
-        [Key]
-        public int Id { get; set; }
-        // [Key] 
+        [Key] 
         public string Statement { get; set; }
-        public List<Document> Documents { get; set; }
+
+        public List<Word_Document> WordDocuments { get; set; }
+    
     }
     
     

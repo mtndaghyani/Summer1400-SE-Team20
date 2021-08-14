@@ -5,39 +5,54 @@ using SearchEngine.Interfaces;
 
 namespace SearchEngine.Classes
 {
-    public class DatabaseInvertedIndex : IInvertedIndex<string, Document>
+    public class DatabaseInvertedIndex: IInvertedIndex<string, Document>
     {
+        private IndexingContext IndexingContext { get; set; }
+
+        public DatabaseInvertedIndex()
+        {
+            IndexingContext = new IndexingContext();
+        }
+
         public bool ContainsKey(string key)
         {
-            using var indexingContext = new IndexingContext();
-            var contains = indexingContext.WordDocumentsPairs.Any(x => x.Statement == key);
-            indexingContext.SaveChanges();
+            var contains = IndexingContext.Words.Any(x => x.Statement == key);
+            IndexingContext.SaveChanges();
             return contains;
         }
 
         public HashSet<Document> Get(string key)
         {
-            using var indexingContext = new IndexingContext();
-            Word pair = indexingContext.WordDocumentsPairs.SingleOrDefault(x => x.Statement == key);
-            return pair != null ? new HashSet<Document>(pair.Documents) : new HashSet<Document>();
+            Word word = IndexingContext.Words.SingleOrDefault(x => x.Statement == key);
+            IndexingContext.SaveChanges();
+            return word == null 
+                ? new HashSet<Document>() 
+                : new HashSet<Document>(word.WordDocuments.Select(x => x.Document));
         }
 
         public void Add(string key, Document value)
         {
-            using var indexingContext = new IndexingContext();
-            Word pair = indexingContext.WordDocumentsPairs.SingleOrDefault(x => x.Statement == key);
-            if (pair == null)
+            // if (!IndexingContext.Documents.Any(x => x.DocumentNumber == value.DocumentNumber))
+            // {
+            //     IndexingContext.Documents.Add(value);
+            // }
+
+            Word word = IndexingContext.Words.SingleOrDefault(x => x.Statement == key);
+            if (word == null)
             {
-                pair = new Word() {Statement = key, Documents = new List<Document>() {value}};
-                indexingContext.WordDocumentsPairs.Add(pair);
+                var newWord = new Word() {Statement = key};
+                var pair = new Word_Document(){WordId = newWord.Statement, DocumentId = value.Id};
+                IndexingContext.Words.Add(newWord);
+                IndexingContext.WordDocuments.Add(pair);
             }
             else
             {
-                // pair.Documents.Add(value);
-                // indexingContext.WordDocumentsPairs.Update(pair);
+                IndexingContext.WordDocuments.Add(new Word_Document() {WordId = word.Statement, DocumentId = value.Id});
             }
 
-            indexingContext.SaveChanges();
+            IndexingContext.SaveChanges();
         }
+        
+
     }
 }

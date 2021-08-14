@@ -44,7 +44,7 @@ namespace SearchEngine.Classes
             var documentCounter = 1;
             foreach (var tokenList in tokens)
             {
-                Document document = new Document() {DocumentIdentification = documentCounter};
+                Document document = new Document() {DocumentNumber = documentCounter};
                 foreach (var token in tokenList)
                 {
                     _invertedIndex.Add(token, document);

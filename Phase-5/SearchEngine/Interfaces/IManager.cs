@@ -10,7 +10,7 @@ namespace SearchEngine.Interfaces
         {
             foreach (Document doc in elements)
             {
-                Console.WriteLine("element" + doc.DocumentIdentification);
+                Console.WriteLine("element" + doc.DocumentNumber);
             }
         }
         void Run();

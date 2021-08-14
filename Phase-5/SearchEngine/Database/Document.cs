@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
-using SearchEngine.Interfaces;
 
 namespace SearchEngine.Database
 {
     public class Document
     {
-        [Key]
         public int Id { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int DocumentIdentification { get; set; }
-
-        public List<Word> Words { get; set; }
+        public int DocumentNumber { get; set; }
+        
+        public List<Word_Document> WordDocuments { get; set; }
         
         public override bool Equals(Object obj)
         {
@@ -25,12 +19,12 @@ namespace SearchEngine.Database
             }
 
             Document doc = (Document) obj;
-            return (DocumentIdentification == doc.DocumentIdentification);
+            return (DocumentNumber == doc.DocumentNumber);
         }
 
         public override int GetHashCode()
         {
-            return DocumentIdentification;
+            return Id;
         }
     }
 }
