@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SearchEngine.Database;
 using SearchEngine.Interfaces;
 
@@ -23,7 +24,10 @@ namespace SearchEngine.Classes
 
         public HashSet<Document> Get(string key)
         {
-            Word word = IndexingContext.Words.SingleOrDefault(x => x.Statement == key);
+            Word word = IndexingContext.Words
+                .Include(x => x.WordDocuments)
+                .ThenInclude(y => y.Document)
+                .SingleOrDefault(x => x.Statement == key);
             IndexingContext.SaveChanges();
             return word == null 
                 ? new HashSet<Document>() 
