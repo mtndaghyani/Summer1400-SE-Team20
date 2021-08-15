@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using SearchEngine.Database;
-using SearchEngine.Interfaces;
+using SearchEngine.Classes.IO.Database;
+using SearchEngine.Classes.IO.Database.Models;
+using SearchEngine.Interfaces.Indexers;
 
-namespace SearchEngine.Classes
+namespace SearchEngine.Classes.Indexers
 {
     public class DictionaryInvertedIndex : IInvertedIndex<string, Document>
     {

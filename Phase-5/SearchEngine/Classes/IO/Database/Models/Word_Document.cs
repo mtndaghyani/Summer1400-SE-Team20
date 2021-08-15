@@ -1,4 +1,4 @@
-﻿namespace SearchEngine.Database
+﻿namespace SearchEngine.Classes.IO.Database.Models
 {
     public class Word_Document
     {

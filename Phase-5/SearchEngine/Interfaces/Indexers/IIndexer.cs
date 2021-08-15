@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SearchEngine.Interfaces
+namespace SearchEngine.Interfaces.Indexers
 {
     public interface IIndexer <TKey, TValue>
     {

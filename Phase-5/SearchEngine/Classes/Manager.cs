@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using SearchEngine.Database;
+using SearchEngine.Classes.Core;
+using SearchEngine.Classes.Indexers;
+using SearchEngine.Classes.IO;
+using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces;
+using SearchEngine.Interfaces.Indexers;
 
 namespace SearchEngine.Classes
 {

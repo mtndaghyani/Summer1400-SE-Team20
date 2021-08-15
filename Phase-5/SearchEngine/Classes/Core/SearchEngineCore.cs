@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using SearchEngine.Database;
-using SearchEngine.Interfaces;
+using SearchEngine.Classes.IO.Database.Models;
+using SearchEngine.Interfaces.Core;
+using SearchEngine.Interfaces.Indexers;
 
-namespace SearchEngine.Classes
+namespace SearchEngine.Classes.Core
 {
     public class SearchEngineCore : ISearchEngineCore
     {

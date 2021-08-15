@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SearchEngine.Database
+namespace SearchEngine.Classes.IO.Database.Models
 {
     public class Document
     {

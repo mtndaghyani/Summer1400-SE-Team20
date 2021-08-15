@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SearchEngine.Database;
-using SearchEngine.Interfaces;
+using SearchEngine.Classes.IO.Database.Models;
+using SearchEngine.Interfaces.Indexers;
+using SearchEngine.Interfaces.IO;
 
-namespace SearchEngine.Classes
+namespace SearchEngine.Classes.Indexers
 {
     public class Indexer : IIndexer <string, Document>
     {

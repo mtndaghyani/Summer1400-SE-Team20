@@ -1,4 +1,4 @@
-﻿using SearchEngine.Database;
+﻿using SearchEngine.Classes.IO.Database;
 
 namespace SearchEngineTests.Database
 {

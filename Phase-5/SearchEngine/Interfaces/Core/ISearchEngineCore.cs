@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using SearchEngine.Database;
+using SearchEngine.Classes.IO.Database;
+using SearchEngine.Classes.IO.Database.Models;
 
-namespace SearchEngine.Interfaces
+namespace SearchEngine.Interfaces.Core
 {
     public interface ISearchEngineCore
     {

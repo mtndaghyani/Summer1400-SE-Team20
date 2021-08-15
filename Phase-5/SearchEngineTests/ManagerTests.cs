@@ -4,7 +4,8 @@ using System.IO;
 using NSubstitute;
 using NSubstitute.Extensions;
 using SearchEngine.Classes;
-using SearchEngine.Database;
+using SearchEngine.Classes.IO.Database;
+using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces;
 using Xunit;
 

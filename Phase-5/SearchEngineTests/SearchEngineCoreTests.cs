@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using NSubstitute;
 using SearchEngine.Classes;
-using SearchEngine.Database;
+using SearchEngine.Classes.Core;
+using SearchEngine.Classes.IO.Database;
+using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces;
+using SearchEngine.Interfaces.Indexers;
 using Xunit;
 
 namespace SearchEngineTests

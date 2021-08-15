@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SearchEngine.Database
+namespace SearchEngine.Classes.IO.Database.Models
 {
     public class Word
     {

@@ -1,4 +1,4 @@
-﻿namespace SearchEngine.Interfaces
+﻿namespace SearchEngine.Interfaces.Indexers
 {
     public interface IWordProcessor
     {

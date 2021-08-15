@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SearchEngine.Classes.IO.Database.Models;
 
-namespace SearchEngine.Database
+namespace SearchEngine.Classes.IO.Database
 {
     public class IndexingContext:DbContext
     {
