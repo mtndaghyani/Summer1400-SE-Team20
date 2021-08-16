@@ -8,7 +8,6 @@ namespace SearchEngine.Classes
         public bool IndexFromDb { get; set; }
         public bool DoIndex { get; set; }
         public string DataPath { get; set; }
-        public string ConnectionString { get; set; }
 
         public static Config ReadConfig(string jsonPath)
         {

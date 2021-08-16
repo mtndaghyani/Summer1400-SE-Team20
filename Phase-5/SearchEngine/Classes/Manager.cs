@@ -20,7 +20,7 @@ namespace SearchEngine.Classes
         public Manager(string configPath)
         {
             _config = Config.ReadConfig(configPath);
-            MakeInvertedIndex(_config.DoIndex);
+            MakeInvertedIndex();
             MakeSearchEngine();
         }
 
@@ -41,13 +41,13 @@ namespace SearchEngine.Classes
             _engine = new SearchEngineCore(new WordProcessor(), _indexer.GetInvertedIndex());
         }
 
-        private void MakeInvertedIndex(bool doIndex)
+        private void MakeInvertedIndex()
         {
             IInvertedIndex<string, Document> invertedIndex = _config.IndexFromDb ?
                 new DatabaseInvertedIndex() :
                 new DictionaryInvertedIndex();
             _indexer = new Indexer(new FileReader(_config.DataPath), new WordProcessor(), invertedIndex);
-            if (doIndex)
+            if (_config.DoIndex)
             {
                 Console.WriteLine("Indexing started...");
                 _indexer.SetUpInvertedIndex();

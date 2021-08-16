@@ -14,6 +14,12 @@ namespace SearchEngine.Classes.Core
         private readonly IWordProcessor _wordProcessor;
         private static readonly Regex SearchRegex = new Regex(SearchWordRegex, RegexOptions.Compiled);
 
+        public SearchEngineCore(IWordProcessor wordProcessor, IInvertedIndex<string, Document> invertedIndex)
+        {
+            _wordProcessor = wordProcessor;
+            _invertedIndex = invertedIndex;
+        }
+
         private static MatchCollection GetMatches(string statement)
         {
             return SearchRegex.Matches(statement);
@@ -24,12 +30,6 @@ namespace SearchEngine.Classes.Core
             var groups = match.Groups;
             var word = groups[2].Value;
             return word;
-        }
-
-        public SearchEngineCore(IWordProcessor wordProcessor, IInvertedIndex<string, Document> invertedIndex)
-        {
-            _wordProcessor = wordProcessor;
-            _invertedIndex = invertedIndex;
         }
 
         public HashSet<Document> Search(string statement)

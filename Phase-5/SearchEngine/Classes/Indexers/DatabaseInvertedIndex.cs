@@ -19,7 +19,6 @@ namespace SearchEngine.Classes.Indexers
         public bool ContainsKey(string key)
         {
             var contains = IndexingContext.Words.Any(x => x.Statement == key);
-            IndexingContext.SaveChanges();
             return contains;
         }
 
@@ -29,7 +28,6 @@ namespace SearchEngine.Classes.Indexers
                 .Include(x => x.WordDocuments)
                 .ThenInclude(y => y.Document)
                 .SingleOrDefault(x => x.Statement == key);
-            IndexingContext.SaveChanges();
             return word == null 
                 ? new HashSet<Document>() 
                 : new HashSet<Document>(word.WordDocuments.Select(x => x.Document));

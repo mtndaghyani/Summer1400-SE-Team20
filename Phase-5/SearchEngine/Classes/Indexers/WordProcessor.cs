@@ -5,10 +5,11 @@ namespace SearchEngine.Classes.Indexers
 {
     public class WordProcessor: IWordProcessor
     {
-        private readonly string _pattern = "([,.;'\"?!@#$%^&:*]*)(\\w+)([,.;'\"?!@#$%^&:*]*)";
+        private const string Pattern = "([,.;'\"?!@#$%^&:*]*)(\\w+)([,.;'\"?!@#$%^&:*]*)";
+
         public  string ProcessWord(string word)
         {
-            var regex = new Regex(_pattern, RegexOptions.Compiled);
+            var regex = new Regex(Pattern, RegexOptions.Compiled);
             return regex.Match(word).Groups[2].Value.ToLower();
 
         }
