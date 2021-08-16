@@ -1,5 +1,4 @@
-﻿using SearchEngine.Classes;
-using SearchEngine.Classes.Indexers;
+﻿using SearchEngine.Classes.Indexers;
 using Xunit;
 
 namespace SearchEngineTests

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using NSubstitute;
 using SearchEngine.Classes;
 using SearchEngine.Classes.Core;
@@ -13,7 +14,7 @@ namespace SearchEngineTests
 {
     public class SearchEngineCoreTests
     {
-        private readonly IIndexer<string, Document> _indexer = Substitute.For<IIndexer<string, Document>>();
+        private readonly IWordProcessor _wordProcessorMock = Substitute.For<IWordProcessor>();
         private IInvertedIndex<string, Document> _invertedIndexMock = Substitute.For<IInvertedIndex<string, Document>>();
 
         public SearchEngineCoreTests()
@@ -32,15 +33,14 @@ namespace SearchEngineTests
             _invertedIndexMock.Get("whatsUp").Returns(new HashSet<Document>());
             _invertedIndexMock.ContainsKey("salam").Returns(true);
             _invertedIndexMock.ContainsKey("jinks").Returns(true);
-            _indexer.Stem(Arg.Any<string>()).Returns(i => i[0]);
-            _indexer.GetInvertedIndex().Returns(_invertedIndexMock);
+            _wordProcessorMock.ProcessWord(Arg.Any<string>()).Returns(i => i[0]);
         }
         
         [Fact]
         public void TestSearch_WHEN_whatsUp_EXPECTED_empty(){
             string toSearch = "whatsUp";
             List<int> expected = new List<int>(new int[] {});
-            SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
+            SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
             AssertEqualDocumentEnumerable(expected, searchResult);
         }
@@ -49,7 +49,7 @@ namespace SearchEngineTests
         public void TestSearch_WHEN_salam_EXPECTED_oneAndThree(){
             string toSearch = "salam";
             List<int> expected = new List<int>(new int[] {1, 3});
-            SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
+            SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
             AssertEqualDocumentEnumerable(expected, searchResult);
         }
@@ -58,7 +58,7 @@ namespace SearchEngineTests
         public void TestSearch_WHEN_salamPlusJinks_EXPECTED_one(){
             String toSearch = "salam +jinks";
             List<int> expected = new List<int>(new int[]{1});
-            SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
+            SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
             AssertEqualDocumentEnumerable(expected, searchResult);
         }
@@ -67,7 +67,7 @@ namespace SearchEngineTests
         public void TestSearch_WHEN_jinksMinusSalam_EXPECTED_one(){
             String toSearch = "-salam jinks";
             List<int> expected = new List<int>(new int[]{26, 30});
-            SearchEngineCore searchEngine = new SearchEngineCore(_indexer);
+            SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
             AssertEqualDocumentEnumerable(expected, searchResult);
         }

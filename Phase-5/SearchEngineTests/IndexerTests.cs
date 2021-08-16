@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using NSubstitute;
-using SearchEngine.Classes;
 using SearchEngine.Classes.Indexers;
-using SearchEngine.Classes.IO.Database;
 using SearchEngine.Classes.IO.Database.Models;
-using SearchEngine.Interfaces;
 using SearchEngine.Interfaces.Indexers;
 using SearchEngine.Interfaces.IO;
 using Xunit;
