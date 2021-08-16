@@ -38,7 +38,7 @@ namespace SearchEngine.Classes
 
         private void MakeSearchEngine()
         {
-            _engine = new SearchEngineCore(_indexer);
+            _engine = new SearchEngineCore(new WordProcessor(), _indexer.GetInvertedIndex());
         }
 
         private void MakeInvertedIndex(bool doIndex)
