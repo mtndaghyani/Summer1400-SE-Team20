@@ -42,10 +42,10 @@ namespace SearchEngine.Classes.Indexers
 
         public void SetUpInvertedIndex()
         {
-            Console.WriteLine("read start");
+            Console.Error.WriteLine("Reading started");
             var tokens = GetDocumentsTokens();
-            Console.WriteLine("read end");
-            Console.WriteLine("index start");
+            Console.Error.WriteLine("Reading ended");
+            Console.Error.WriteLine("Index started");
 
             var documentCounter = 1;
             foreach (var tokenList in tokens)
@@ -58,13 +58,8 @@ namespace SearchEngine.Classes.Indexers
 
                 documentCounter += 1;
             }
-            Console.WriteLine("index end");
+            Console.Error.WriteLine("Index end");
 
-        }
-
-        public string Stem(string word)
-        {
-            return _wordProcessor.ProcessWord(word);
         }
     }
 }
