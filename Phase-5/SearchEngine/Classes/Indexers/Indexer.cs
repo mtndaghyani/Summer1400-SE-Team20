@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces.Indexers;
@@ -31,7 +32,7 @@ namespace SearchEngine.Classes.Indexers
         private List<string> TokenizeContent(string content)
         {
             var words = content.Trim().Split(Separator);
-            return new List<string>(words.Select(Stem)).ToList();
+            return new List<string>(words.Select(_wordProcessor.ProcessWord)).ToList();
         }
 
         public IInvertedIndex<string, Document> GetInvertedIndex()
@@ -41,7 +42,11 @@ namespace SearchEngine.Classes.Indexers
 
         public void SetUpInvertedIndex()
         {
+            Console.WriteLine("read start");
             var tokens = GetDocumentsTokens();
+            Console.WriteLine("read end");
+            Console.WriteLine("index start");
+
             var documentCounter = 1;
             foreach (var tokenList in tokens)
             {
@@ -53,6 +58,8 @@ namespace SearchEngine.Classes.Indexers
 
                 documentCounter += 1;
             }
+            Console.WriteLine("index end");
+
         }
 
         public string Stem(string word)
