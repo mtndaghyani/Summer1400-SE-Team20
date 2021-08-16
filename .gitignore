@@ -9,6 +9,7 @@
 bin
 obj
 Migrations
+/Phase-5/SearchEngineTests/Database
 resources
 SearchEngineProject
 *.sln.DotSettings.user
