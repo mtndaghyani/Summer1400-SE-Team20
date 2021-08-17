@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SearchEngine.Classes.IO.Database;
@@ -9,11 +10,19 @@ namespace SearchEngine.Classes.Indexers
 {
     public class DatabaseInvertedIndex: IInvertedIndex<string, Document>
     {
+        private const string ConnectionString = "Server=.; Database=IndexingDB; Trusted_Connection=True;";
         private IndexingContext IndexingContext { get; set; }
 
-        public DatabaseInvertedIndex()
+        public DatabaseInvertedIndex(string databaseProvider)
         {
-            IndexingContext = new IndexingContext();
+            DbContextOptionsBuilder<IndexingContext> contextOptionsBuilder = new();
+            if(databaseProvider == "SQLServer")
+                contextOptionsBuilder.UseSqlServer(ConnectionString);
+            else if (databaseProvider == "InMemory")
+                contextOptionsBuilder.UseInMemoryDatabase("MyInMemoryDB");
+            else
+                throw new Exception("Invalid DatabaseProvider");
+            IndexingContext = new IndexingContext(contextOptionsBuilder.Options);
         }
 
         public bool ContainsKey(string key)
