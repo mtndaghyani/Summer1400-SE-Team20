@@ -26,10 +26,6 @@ namespace SearchWebAPI
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "SearchWebAPI", Version = "v1"});
-            });
             services.Add(new ServiceDescriptor(typeof(ISearchEngineCore), 
                 new SearchEngineCore(new WordProcessor(), new DatabaseInvertedIndex())));
         }
@@ -40,8 +36,6 @@ namespace SearchWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SearchWebAPI v1"));
             }
 
             app.UseHttpsRedirection();
