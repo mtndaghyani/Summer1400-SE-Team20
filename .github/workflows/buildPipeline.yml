@@ -13,6 +13,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./coverage1.xml,./coverage2.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -30,14 +38,4 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
       working-directory: Phase-5/SearchEngine
-
-
-    - name: Publish code coverage reports to codecove.io
-      uses: codecov/codecov-action@v2
-      with:
-        files: ./coverage1.xml,./coverage2.xml # optional
-        flags: unittests # optional
-        name: codecov-umbrella # optional
-        fail_ci_if_error: true # optional (default = false)
-        verbose: true # optional (default = false)
 
