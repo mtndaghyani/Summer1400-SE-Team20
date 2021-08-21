@@ -13,10 +13,8 @@ namespace SearchEngineTests.DatabaseTests
     public abstract class DatabaseInvertedIndexTests
     {
         protected DbContextOptions<IndexingContext> ContextOptions;
-        // private readonly ITestOutputHelper _testOutputHelper;
         public DatabaseInvertedIndexTests(DbContextOptions<IndexingContext> contextOptions)
         {
-            // _testOutputHelper = testOutputHelper;
             ContextOptions = contextOptions;
             Seed();
         }
@@ -93,6 +91,7 @@ namespace SearchEngineTests.DatabaseTests
             Document doc = new Document() {DocumentNumber = 10};
             string statement = "AsgharNam";
             databaseInvertedIndex.Add(statement, doc);
+            databaseInvertedIndex.SaveChanges();
             using var context = new IndexingContext(ContextOptions);
             bool wordResult = context.Words.Any(word => word.Statement == statement);
             Assert.True(wordResult);
