@@ -17,8 +17,9 @@ namespace SearchEngine.Classes.IO
         public List<string> Read()
         {
            return Directory.EnumerateFiles(_path)
-                                             .Select(File.ReadAllText)
-                                             .ToList();
+                                            .OrderBy(x => x)
+                                            .Select(File.ReadAllText)
+                                            .ToList();
         }
     }
 }
