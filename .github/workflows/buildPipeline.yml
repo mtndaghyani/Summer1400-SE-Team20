@@ -29,7 +29,7 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
-      working-directory: Phase-5/SearchEngine
+      working-directory: Phase-5
       
     - name: Publish code coverage reports to codecove.io
       uses: codecov/codecov-action@v1
