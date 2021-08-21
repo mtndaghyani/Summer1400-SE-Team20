@@ -1,15 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using SearchEngine.Interfaces;
+using SearchEngine.Classes.IO.Database.Models;
+using SearchEngine.Interfaces.Core;
+using SearchEngine.Interfaces.Indexers;
 
-namespace SearchEngine.Classes
+namespace SearchEngine.Classes.Core
 {
     public class SearchEngineCore : ISearchEngineCore
     {
         private const string SearchWordRegex = "([,.;'\"?!@#$%^&:*]*)([+-]?\\w+)([,.;'\"?!@#$%^&:*]*)";
-        private readonly IIndexer _indexer;
+        private readonly IInvertedIndex<string, Document> _invertedIndex;
+        private readonly IWordProcessor _wordProcessor;
         private static readonly Regex SearchRegex = new Regex(SearchWordRegex, RegexOptions.Compiled);
+
+        public SearchEngineCore(IWordProcessor wordProcessor, IInvertedIndex<string, Document> invertedIndex)
+        {
+            _wordProcessor = wordProcessor;
+            _invertedIndex = invertedIndex;
+        }
 
         private static MatchCollection GetMatches(string statement)
         {
@@ -23,12 +32,7 @@ namespace SearchEngine.Classes
             return word;
         }
 
-        public SearchEngineCore(IIndexer indexer)
-        {
-            this._indexer = indexer;
-        }
-
-        public HashSet<int> Search(string statement)
+        public HashSet<Document> Search(string statement)
         {
             var fields = MakeSearchFields(statement);
             return AdvancedSearch(fields);
@@ -43,15 +47,15 @@ namespace SearchEngine.Classes
                 var word = GetRegexSecondGroupMatched(match);
                 if (word.StartsWith("+"))
                 {
-                    fields.AddPlusWord(_indexer.Stem(word.Substring(1)));
+                    fields.AddPlusWord(_wordProcessor.ProcessWord(word.Substring(1)));
                 }
                 else if (word.StartsWith("-"))
                 {
-                    fields.AddMinusWord(_indexer.Stem(word.Substring(1)));
+                    fields.AddMinusWord(_wordProcessor.ProcessWord(word.Substring(1)));
                 }
                 else
                 {
-                    fields.AddSimpleWord(_indexer.Stem(word));
+                    fields.AddSimpleWord(_wordProcessor.ProcessWord(word));
                 }
             }
 
@@ -59,9 +63,9 @@ namespace SearchEngine.Classes
         }
 
 
-        private HashSet<int> AdvancedSearch(SearchFields fields)
+        private HashSet<Document> AdvancedSearch(SearchFields fields)
         {
-            HashSet<int> result = new HashSet<int>();
+            var result = new HashSet<Document>();
             HandlePlusWords(fields, result);
             HandleSimpleWords(fields, result);
             HandleMinusWords(fields, result);
@@ -69,42 +73,42 @@ namespace SearchEngine.Classes
             return result;
         }
 
-        private void HandleMinusWords(ISearchFields fields, HashSet<int> result)
+        private void HandleMinusWords(ISearchFields fields, HashSet<Document> result)
         {
             foreach (string s in fields.GetMinusWords())
             {
-                if (_indexer.GetInvertedIndex().ContainsKey(s))
-                    result.ExceptWith(_indexer.GetInvertedIndex()[s]);
+                if (_invertedIndex.ContainsKey(s))
+                    result.ExceptWith(_invertedIndex.Get(s));
             }
         }
 
-        private void HandlePlusWords(ISearchFields fields, HashSet<int> result)
+        private void HandlePlusWords(ISearchFields fields, HashSet<Document> result)
         {
             if (!result.Any() && !fields.GetPlusWords().Any())
             {
                 foreach (string s in fields.GetSimpleWords())
-                    result.UnionWith(_indexer.GetInvertedIndex()[s]);
+                    result.UnionWith(_invertedIndex.Get(s));
                 return;
             }
 
             foreach (string s in fields.GetPlusWords())
             {
-                if (_indexer.GetInvertedIndex().ContainsKey(s))
-                    result.UnionWith(_indexer.GetInvertedIndex()[s]);
+                if (_invertedIndex.ContainsKey(s))
+                    result.UnionWith(_invertedIndex.Get(s));
             }
         }
 
-        private void HandleSimpleWords(ISearchFields fields, HashSet<int> result)
+        private void HandleSimpleWords(ISearchFields fields, HashSet<Document> result)
         {
             foreach (string s in fields.GetSimpleWords())
             {
-                if (!_indexer.GetInvertedIndex().ContainsKey(s))
+                if (!_invertedIndex.ContainsKey(s))
                 {
                     result.Clear();
                     return;
                 }
 
-                result.IntersectWith(_indexer.GetInvertedIndex()[s]);
+                result.IntersectWith(_invertedIndex.Get(s));
             }
         }
     }

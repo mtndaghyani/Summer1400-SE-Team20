@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SearchEngine.Interfaces;
+using SearchEngine.Interfaces.IO;
 
-namespace SearchEngine.Classes
+namespace SearchEngine.Classes.IO
 {
     public class FileReader : IReader
     {
@@ -17,9 +17,9 @@ namespace SearchEngine.Classes
         public List<string> Read()
         {
            return Directory.EnumerateFiles(_path)
-                                             .OrderBy(x => x)
-                                             .Select(File.ReadAllText)
-                                             .ToList();
+                                            .OrderBy(x => x)
+                                            .Select(File.ReadAllText)
+                                            .ToList();
         }
     }
 }

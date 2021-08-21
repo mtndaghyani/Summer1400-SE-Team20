@@ -1,0 +1,6 @@
+﻿{
+  "IndexFromDb": false,
+  "DoIndex": true,
+  "DataPath" : "../../../testDocs",
+  "DatabaseProvider" : "SQLServer"
+}

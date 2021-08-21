@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using SearchEngine.Classes.Core;
+using SearchEngine.Classes.Indexers;
+using SearchEngine.Classes.IO;
+using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces;
+using SearchEngine.Interfaces.Indexers;
 
 namespace SearchEngine.Classes
 {
@@ -10,10 +15,12 @@ namespace SearchEngine.Classes
 
         private Indexer _indexer;
         private SearchEngineCore _engine;
+        private readonly Config _config;
 
-        public Manager(string path)
+        public Manager(string configPath)
         {
-            MakeInvertedIndex(path);
+            _config = Config.ReadConfig(configPath);
+            MakeInvertedIndex();
             MakeSearchEngine();
         }
 
@@ -23,7 +30,7 @@ namespace SearchEngine.Classes
             Console.WriteLine("Enter something:");
             while (!Finished(toSearch = Console.ReadLine()))
             {
-                HashSet<int> docs = DoSearch(toSearch);
+                HashSet<Document> docs = DoSearch(toSearch);
                 IManager.PrintElements(docs);
                 Console.WriteLine("Enter something:");
             }
@@ -31,17 +38,25 @@ namespace SearchEngine.Classes
 
         private void MakeSearchEngine()
         {
-            _engine = new SearchEngineCore(_indexer);
+            _engine = new SearchEngineCore(new WordProcessor(), _indexer.GetInvertedIndex());
         }
 
-        private void MakeInvertedIndex(string path)
+        private void MakeInvertedIndex()
         {
-            Console.WriteLine("Indexing started...");
-            _indexer = new Indexer(new FileReader(path), new WordProcessor());
-            Console.WriteLine("DONE");
+            IInvertedIndex<string, Document> invertedIndex = _config.IndexFromDb ?
+                new DatabaseInvertedIndex(_config.DatabaseProvider) :
+                new DictionaryInvertedIndex();
+            _indexer = new Indexer(new FileReader(_config.DataPath), new WordProcessor(), invertedIndex);
+            if (_config.DoIndex)
+            {
+                Console.WriteLine("Indexing started...");
+                _indexer.SetUpInvertedIndex();
+                Console.WriteLine("DONE");
+            }
+
         }
 
-        public virtual HashSet<int> DoSearch(string toSearch)
+        public virtual HashSet<Document> DoSearch(string toSearch)
         {
             return _engine.Search(toSearch);
         }

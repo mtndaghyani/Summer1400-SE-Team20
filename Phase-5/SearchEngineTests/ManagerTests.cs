@@ -4,6 +4,8 @@ using System.IO;
 using NSubstitute;
 using NSubstitute.Extensions;
 using SearchEngine.Classes;
+using SearchEngine.Classes.IO.Database;
+using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces;
 using Xunit;
 
@@ -11,12 +13,12 @@ namespace SearchEngineTests
 {
     public class ManagerTests
     {
-        private const string DatasetPath = "../../../testDocs";
+        private const string ConfigPath = "../../../testConfig.json";
         private readonly IManager _manager;
 
         public ManagerTests()
         {
-            _manager = new Manager(DatasetPath);
+            _manager = new Manager(ConfigPath);
         }
 
         [Fact]
@@ -42,7 +44,12 @@ namespace SearchEngineTests
         {
             var writer = new StringWriter();
             Console.SetOut(writer);
-            List<int> testList = new List<int>(new int[] {2, 5, 7});
+            var testList = new List<Document>(new Document[]
+            {
+                new Document(){DocumentNumber = 2}, 
+                new Document(){DocumentNumber = 5},
+                new Document(){DocumentNumber = 7}
+            });
             IManager.PrintElements(testList);
             writer.Flush();
 
@@ -53,7 +60,7 @@ namespace SearchEngineTests
         [Fact]
         public void TestRun_WHEN_firstInputIsDollar_EXPECT_emptyOutput()
         {
-            Manager runManager = Substitute.ForPartsOf<Manager>(DatasetPath);
+            Manager runManager = Substitute.ForPartsOf<Manager>(ConfigPath);
             runManager.Configure().Finished(Arg.Any<string>()).Returns(true);
             var reader = new StringReader("$\n");
             Console.SetIn(reader);
@@ -68,12 +75,16 @@ namespace SearchEngineTests
         [Fact]
         public void TestRun_WHEN_secondInputIsDollar_EXPECT_oneTimeOutput()
         {
-            Manager runManager = Substitute.ForPartsOf<Manager>(DatasetPath);
+            Manager runManager = Substitute.ForPartsOf<Manager>(ConfigPath);
 
             runManager.Finished(Arg.Any<string>()).Returns(false);
             runManager.Finished("$").Returns(true);
 
-            runManager.DoSearch(Arg.Any<string>()).Returns(new HashSet<int>(new int[] {1, 3}));
+            runManager.DoSearch(Arg.Any<string>()).Returns(new HashSet<Document>(new Document[]
+            {
+                new Document(){DocumentNumber = 1},
+                new Document(){DocumentNumber = 3}
+            }));
 
             var reader = new StringReader("Something\r\n$\r\n");
             Console.SetIn(reader);
