@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchEngine", "SearchEngine\SearchEngine.csproj", "{6B86B707-650E-47F7-8190-67F5F98C5E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchEngineTests", "SearchEngineTests\SearchEngineTests.csproj", "{9470B78E-24CC-4882-9822-E85006893852}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B86B707-650E-47F7-8190-67F5F98C5E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B86B707-650E-47F7-8190-67F5F98C5E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B86B707-650E-47F7-8190-67F5F98C5E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B86B707-650E-47F7-8190-67F5F98C5E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9470B78E-24CC-4882-9822-E85006893852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9470B78E-24CC-4882-9822-E85006893852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9470B78E-24CC-4882-9822-E85006893852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9470B78E-24CC-4882-9822-E85006893852}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
