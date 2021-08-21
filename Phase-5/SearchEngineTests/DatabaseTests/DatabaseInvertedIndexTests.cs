@@ -33,10 +33,10 @@ namespace SearchEngineTests.DatabaseTests
                 var word3 = new Word() {Statement = "gheisarieh"};
                 var document1 = new Document() {DocumentNumber = 3};
                 var document2 = new Document() {DocumentNumber = 5};
-                var wordDoc1 = new Word_Document() {Document = document1, Word = word1};
-                var wordDoc2 = new Word_Document() {Document = document1, Word = word2};
-                var wordDoc3 = new Word_Document() {Document = document2, Word = word1};
-                var wordDoc4 = new Word_Document() {Document = document2, Word = word3};
+                var wordDoc1 = new WordDocument() {Document = document1, Word = word1};
+                var wordDoc2 = new WordDocument() {Document = document1, Word = word2};
+                var wordDoc3 = new WordDocument() {Document = document2, Word = word1};
+                var wordDoc4 = new WordDocument() {Document = document2, Word = word3};
                 
                 context.Words.AddRange(word1, word2);
                 context.Documents.AddRange(document1, document2);

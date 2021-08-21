@@ -8,7 +8,7 @@ namespace SearchEngine.Classes.IO.Database.Models
         [Key] 
         public string Statement { get; set; }
 
-        public List<Word_Document> WordDocuments { get; set; }
+        public List<WordDocument> WordDocuments { get; set; }
     
     }
     

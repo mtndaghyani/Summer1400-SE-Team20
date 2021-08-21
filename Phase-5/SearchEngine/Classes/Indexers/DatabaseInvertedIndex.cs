@@ -48,13 +48,13 @@ namespace SearchEngine.Classes.Indexers
             if (word == null)
             {
                 var newWord = new Word() {Statement = key};
-                var pair = new Word_Document(){Word = newWord, Document = value};
+                var pair = new WordDocument(){Word = newWord, Document = value};
                 IndexingContext.Words.Add(newWord);
                 IndexingContext.WordDocuments.Add(pair);
             }
             else
             {
-                IndexingContext.WordDocuments.Add(new Word_Document() {Word = word, Document = value});
+                IndexingContext.WordDocuments.Add(new WordDocument() {Word = word, Document = value});
             }
 
             IndexingContext.SaveChanges();
