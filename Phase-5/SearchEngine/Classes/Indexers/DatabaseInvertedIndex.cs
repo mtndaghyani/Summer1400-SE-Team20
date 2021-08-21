@@ -23,6 +23,8 @@ namespace SearchEngine.Classes.Indexers
             else
                 throw new Exception("Invalid DatabaseProvider");
             IndexingContext = new IndexingContext(contextOptionsBuilder.Options);
+            IndexingContext.Database.EnsureDeleted();
+            IndexingContext.Database.EnsureCreated();
         }
 
         public bool ContainsKey(string key)
