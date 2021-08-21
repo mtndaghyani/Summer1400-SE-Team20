@@ -55,9 +55,9 @@ namespace SearchEngine.Classes.Indexers
                 {
                     _invertedIndex.Add(token, document);
                 }
-
                 documentCounter += 1;
             }
+            _invertedIndex.SaveChanges();
             Console.Error.WriteLine("Index end");
 
         }

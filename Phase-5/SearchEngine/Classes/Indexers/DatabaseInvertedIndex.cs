@@ -23,12 +23,13 @@ namespace SearchEngine.Classes.Indexers
             else
                 throw new Exception("Invalid DatabaseProvider");
             IndexingContext = new IndexingContext(contextOptionsBuilder.Options);
+            IndexingContext.Database.EnsureDeleted();
+            IndexingContext.Database.EnsureCreated();
         }
 
         public bool ContainsKey(string key)
         {
-            var contains = IndexingContext.Words.Any(x => x.Statement == key);
-            return contains;
+            return IndexingContext.Words.Any(x => x.Statement == key);
         }
 
         public HashSet<Document> Get(string key)
@@ -44,7 +45,7 @@ namespace SearchEngine.Classes.Indexers
 
         public void Add(string key, Document value)
         {
-            Word word = IndexingContext.Words.SingleOrDefault(x => x.Statement == key);
+            Word word = IndexingContext.Words.Find(key);
             if (word == null)
             {
                 var newWord = new Word() {Statement = key};
@@ -57,9 +58,11 @@ namespace SearchEngine.Classes.Indexers
                 IndexingContext.WordDocuments.Add(new WordDocument() {Word = word, Document = value});
             }
 
+        }
+
+        public void SaveChanges()
+        {
             IndexingContext.SaveChanges();
         }
-        
-
     }
 }

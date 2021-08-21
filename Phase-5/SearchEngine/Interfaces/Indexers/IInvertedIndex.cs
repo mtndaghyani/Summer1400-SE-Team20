@@ -7,5 +7,6 @@ namespace SearchEngine.Interfaces.Indexers
         bool ContainsKey(TKey key);
         HashSet<TValue> Get(TKey key);
         void Add(TKey key, TValue value);
+        void SaveChanges();
     }
 }
