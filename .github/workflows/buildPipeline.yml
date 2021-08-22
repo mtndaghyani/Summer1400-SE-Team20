@@ -36,4 +36,3 @@ jobs:
       with:
         files: ./**/coverage.cobertura.xml
         fail_ci_if_error: true
-
