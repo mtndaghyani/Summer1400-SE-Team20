@@ -8,7 +8,7 @@ namespace SearchEngine.Classes.IO.Database.Models
         public int Id { get; set; }
         public int DocumentNumber { get; set; }
         
-        public List<Word_Document> WordDocuments { get; set; }
+        public List<WordDocument> WordDocuments { get; set; }
         
         public override bool Equals(Object obj)
         {

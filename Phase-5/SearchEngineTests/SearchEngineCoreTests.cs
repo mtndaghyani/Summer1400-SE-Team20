@@ -38,7 +38,7 @@ namespace SearchEngineTests
             List<int> expected = new List<int>(new int[] {});
             SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
-            AssertEqualDocumentEnumerable(expected, searchResult);
+            Utils.AssertEqualDocumentEnumerable(expected, searchResult);
         }
         
         [Fact]
@@ -47,7 +47,7 @@ namespace SearchEngineTests
             List<int> expected = new List<int>(new int[] {1, 3});
             SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
-            AssertEqualDocumentEnumerable(expected, searchResult);
+            Utils.AssertEqualDocumentEnumerable(expected, searchResult);
         }
         
         [Fact]
@@ -56,7 +56,7 @@ namespace SearchEngineTests
             List<int> expected = new List<int>(new int[]{1});
             SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
-            AssertEqualDocumentEnumerable(expected, searchResult);
+            Utils.AssertEqualDocumentEnumerable(expected, searchResult);
         }
 
         [Fact]
@@ -65,19 +65,7 @@ namespace SearchEngineTests
             List<int> expected = new List<int>(new int[]{26, 30});
             SearchEngineCore searchEngine = new SearchEngineCore(_wordProcessorMock, _invertedIndexMock);
             HashSet<Document> searchResult = searchEngine.Search(toSearch);
-            AssertEqualDocumentEnumerable(expected, searchResult);
-        }
-        
-        private void AssertEqualDocumentEnumerable(ICollection<int> expected, HashSet<Document> result)
-        {
-            Assert.Equal(expected.Count, result.Count);
-            foreach (Document doc in result)
-            {
-                if (!expected.Contains(doc.DocumentNumber))
-                {
-                    Assert.True(false, "Hashset does not contain expected value.");
-                }
-            }
+            Utils.AssertEqualDocumentEnumerable(expected, searchResult);
         }
     }
 }

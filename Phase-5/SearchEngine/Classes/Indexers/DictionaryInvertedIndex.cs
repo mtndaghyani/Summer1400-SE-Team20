@@ -29,5 +29,10 @@ namespace SearchEngine.Classes.Indexers
                 _invertedIndex[key] = new HashSet<Document>() {value};
             }
         }
+
+        public void SaveChanges()
+        {
+            
+        }
     }
 }

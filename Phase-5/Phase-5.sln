@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchConsoleApp", "SearchConsoleApp\SearchConsoleApp.csproj", "{623F15C2-E5BA-4480-858D-3BEDDF231A5B}"

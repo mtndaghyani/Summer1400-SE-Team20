@@ -1,6 +1,6 @@
 ﻿namespace SearchEngine.Classes.IO.Database.Models
 {
-    public class Word_Document
+    public class WordDocument
     {
         public int Id { get; set; }
 

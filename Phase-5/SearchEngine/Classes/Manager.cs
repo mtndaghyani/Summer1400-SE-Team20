@@ -44,7 +44,7 @@ namespace SearchEngine.Classes
         private void MakeInvertedIndex()
         {
             IInvertedIndex<string, Document> invertedIndex = _config.IndexFromDb ?
-                new DatabaseInvertedIndex() :
+                new DatabaseInvertedIndex(_config.DatabaseProvider) :
                 new DictionaryInvertedIndex();
             _indexer = new Indexer(new FileReader(_config.DataPath), new WordProcessor(), invertedIndex);
             if (_config.DoIndex)
