@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SearchEngine.Classes.IO.Database;
 using SearchEngine.Classes.IO.Database.Models;
 
 namespace SearchEngine.Interfaces

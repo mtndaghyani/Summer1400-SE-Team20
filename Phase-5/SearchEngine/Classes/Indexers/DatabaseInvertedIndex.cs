@@ -50,7 +50,5 @@ namespace SearchEngine.Classes.Indexers
 
             IndexingContext.SaveChanges();
         }
-        
-
     }
 }
