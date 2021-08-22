@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using SearchEngine.Classes.Core;
 using SearchEngine.Classes.Indexers;
 using SearchEngine.Interfaces.Core;
@@ -24,7 +24,7 @@ namespace SearchWebAPI
         {
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             );
             services.Add(new ServiceDescriptor(typeof(ISearchEngineCore), 
                 new SearchEngineCore(new WordProcessor(), new DatabaseInvertedIndex())));

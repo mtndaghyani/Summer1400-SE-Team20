@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces.Core;
 
 namespace SearchWebAPI.Controllers
@@ -17,7 +16,7 @@ namespace SearchWebAPI.Controllers
             _searchEngineCore = searchEngineCore;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public List<int> Query(string toSearch)
         {
             return new(_searchEngineCore.Search(toSearch).Select(x => x.DocumentNumber));
