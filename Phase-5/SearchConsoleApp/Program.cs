@@ -6,7 +6,8 @@ namespace SearchConsoleApp
     {
         static void Main(string[] args)
         {
-            var manager = new Manager("../../../testConfig.json");
+            var manager = new Manager("../../../IndexerConfig.json",
+                                    "../../../DatabaseConfig.json");
             manager.Run();
         }
     }

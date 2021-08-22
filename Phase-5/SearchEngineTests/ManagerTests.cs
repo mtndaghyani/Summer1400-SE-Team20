@@ -12,12 +12,13 @@ namespace SearchEngineTests
 {
     public class ManagerTests
     {
-        private const string ConfigPath = "../../../testConfig.json";
+        private const string IndexerConfigPath = "../../../IndexerTestConfig.json";
+        private const string DatabaseConfigPath = "../../../DatabaseTestConfig.json";
         private readonly IManager _manager;
 
         public ManagerTests()
         {
-            _manager = new Manager(ConfigPath);
+            _manager = new Manager(IndexerConfigPath, DatabaseConfigPath);
         }
 
         [Fact]
@@ -59,7 +60,7 @@ namespace SearchEngineTests
         [Fact]
         public void TestRun_WHEN_firstInputIsDollar_EXPECT_emptyOutput()
         {
-            Manager runManager = Substitute.ForPartsOf<Manager>(ConfigPath);
+            Manager runManager = Substitute.ForPartsOf<Manager>(IndexerConfigPath, DatabaseConfigPath);
             runManager.Configure().Finished(Arg.Any<string>()).Returns(true);
             var reader = new StringReader("$\n");
             Console.SetIn(reader);
@@ -74,7 +75,7 @@ namespace SearchEngineTests
         [Fact]
         public void TestRun_WHEN_secondInputIsDollar_EXPECT_oneTimeOutput()
         {
-            Manager runManager = Substitute.ForPartsOf<Manager>(ConfigPath);
+            Manager runManager = Substitute.ForPartsOf<Manager>(IndexerConfigPath, DatabaseConfigPath);
 
             runManager.Finished(Arg.Any<string>()).Returns(false);
             runManager.Finished("$").Returns(true);
