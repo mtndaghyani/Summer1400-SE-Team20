@@ -2,6 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <PackageId>StarAcademy.Team20.SearchEngine</PackageId>
+        <Authors>Soroush Taslimi and Matin Daghyani</Authors>
+        <Company>Star Academy</Company>
     </PropertyGroup>
 
     <ItemGroup>
