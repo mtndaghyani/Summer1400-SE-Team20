@@ -29,6 +29,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SearchEngine\SearchEngine.csproj" />
+      <ProjectReference Include="..\SearchWebAPI\SearchWebAPI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="TestResults\bb86f42b-a618-45f2-b932-d55f58b5b62b" />
     </ItemGroup>
 
 </Project>
