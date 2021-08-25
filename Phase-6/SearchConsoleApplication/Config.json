@@ -1,6 +1,0 @@
-﻿{
-  "IndexToDb": true,
-  "DoIndex": true,
-  "DataPath" : "../../../../../resources/documents/testDocs",
-  "DatabaseProvider" : "SQLServer"
-}

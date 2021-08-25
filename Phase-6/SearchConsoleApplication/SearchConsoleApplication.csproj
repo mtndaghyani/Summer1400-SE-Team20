@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="StarAcademy.Team20.SearchEngine" Version="1.0.0" />
+      <PackageReference Include="StarAcademy.Team20.SearchEngine" Version="2.0.0" />
     </ItemGroup>
 
 </Project>
