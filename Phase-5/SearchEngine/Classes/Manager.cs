@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SearchEngine.Classes.Core;
 using SearchEngine.Classes.Indexers;
 using SearchEngine.Classes.IO;
+using SearchEngine.Classes.IO.Database;
 using SearchEngine.Classes.IO.Database.Models;
 using SearchEngine.Interfaces;
 using SearchEngine.Interfaces.Indexers;
@@ -15,11 +16,13 @@ namespace SearchEngine.Classes
 
         private Indexer _indexer;
         private SearchEngineCore _engine;
-        private readonly Config _config;
+        private readonly IndexerConfig _indexerConfig;
+        private readonly DatabaseConfig _databaseConfig;
 
-        public Manager(string configPath)
+        public Manager(string indexerConfigPath, string databaseConfigPath)
         {
-            _config = Config.ReadConfig(configPath);
+            _indexerConfig = JsonFileConverter.ReadConfig<IndexerConfig>(indexerConfigPath);
+            _databaseConfig = JsonFileConverter.ReadConfig<DatabaseConfig>(databaseConfigPath);
             MakeInvertedIndex();
             MakeSearchEngine();
         }
@@ -43,11 +46,11 @@ namespace SearchEngine.Classes
 
         private void MakeInvertedIndex()
         {
-            IInvertedIndex<string, Document> invertedIndex = _config.IndexFromDb ?
-                new DatabaseInvertedIndex(_config.DatabaseProvider) :
+            IInvertedIndex<string, Document> invertedIndex = _indexerConfig.IndexToDb ?
+                new DatabaseInvertedIndex(_databaseConfig.DatabaseProvider) :
                 new DictionaryInvertedIndex();
-            _indexer = new Indexer(new FileReader(_config.DataPath), new WordProcessor(), invertedIndex);
-            if (_config.DoIndex)
+            _indexer = new Indexer(new FileReader(_indexerConfig.DataPath), new WordProcessor(), invertedIndex);
+            if (_indexerConfig.DoIndex)
             {
                 Console.WriteLine("Indexing started...");
                 _indexer.SetUpInvertedIndex();

@@ -10,12 +10,6 @@ namespace SearchEngine.Classes.IO.Database
         public DbSet<WordDocument> WordDocuments { get; set; }
         
         public IndexingContext(DbContextOptions<IndexingContext> contextOptions) : base(contextOptions) {}
-        
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     base.OnConfiguring(optionsBuilder);
-        //     optionsBuilder.UseSqlServer(ConnectionString);
-        // }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

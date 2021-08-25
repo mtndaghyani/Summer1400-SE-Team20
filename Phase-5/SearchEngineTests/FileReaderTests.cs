@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using SearchEngine.Classes;
 using SearchEngine.Classes.IO;
-using SearchEngine.Interfaces;
 using SearchEngine.Interfaces.IO;
 using Xunit;
 

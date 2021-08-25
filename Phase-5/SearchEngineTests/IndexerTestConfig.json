@@ -1,0 +1,5 @@
+﻿{
+  "IndexToDb": false,
+  "DoIndex": true,
+  "DataPath" : "../../../testDocs"
+}
