@@ -4,6 +4,6 @@ namespace SearchEngine.Interfaces.IO
 {
     public interface IReader
     {
-        List<string> Read();
+        IEnumerable<string> Read();
     }
 }

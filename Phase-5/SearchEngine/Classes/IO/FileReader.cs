@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SearchEngine.Interfaces.IO;
@@ -14,12 +15,13 @@ namespace SearchEngine.Classes.IO
             _path = path;
         }
 
-        public List<string> Read()
+        public IEnumerable<string> Read()
         {
-           return Directory.EnumerateFiles(_path)
-                                            .OrderBy(x => x)
-                                            .Select(File.ReadAllText)
-                                            .ToList();
+            foreach (var fileName in Directory.EnumerateFiles(_path).OrderBy(x => x))
+            {
+                Console.WriteLine($"Read file {fileName}");
+                yield return File.ReadAllText(fileName);
+            }
         }
     }
 }

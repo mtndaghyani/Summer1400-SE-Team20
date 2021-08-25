@@ -4,7 +4,7 @@ namespace SearchEngine.Interfaces.Indexers
 {
     public interface IIndexer <TKey, TValue>
     {
-        List<List<TKey>> GetDocumentsTokens();
+        IEnumerable<List<TKey>> GetDocumentsTokens();
         IInvertedIndex<TKey, TValue> GetInvertedIndex();
     }
 }

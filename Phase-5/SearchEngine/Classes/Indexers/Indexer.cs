@@ -22,11 +22,13 @@ namespace SearchEngine.Classes.Indexers
             
         }
 
-        public List<List<string>> GetDocumentsTokens()
+        public IEnumerable<List<string>> GetDocumentsTokens()
         {
             var contents = _reader.Read();
-
-            return contents.Select(TokenizeContent).ToList();
+            foreach (var content in contents)
+            {
+                yield return TokenizeContent(content);
+            }
         }
 
         private List<string> TokenizeContent(string content)
@@ -42,11 +44,7 @@ namespace SearchEngine.Classes.Indexers
 
         public void SetUpInvertedIndex()
         {
-            Console.Error.WriteLine("Reading started");
             var tokens = GetDocumentsTokens();
-            Console.Error.WriteLine("Reading ended");
-            Console.Error.WriteLine("Index started");
-
             var documentCounter = 1;
             foreach (var tokenList in tokens)
             {
@@ -55,11 +53,10 @@ namespace SearchEngine.Classes.Indexers
                 {
                     _invertedIndex.Add(token, document);
                 }
+                Console.WriteLine($"Document {documentCounter} done");
                 documentCounter += 1;
             }
             _invertedIndex.SaveChanges();
-            Console.Error.WriteLine("Index end");
-
         }
     }
 }
